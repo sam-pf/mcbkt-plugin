@@ -1,67 +1,20 @@
-<!--
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th style="width: 25px;"></th>
-        <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-    </thead>
-    <tbody>
-      <tr v-for="row in data">
-        <td>
-        </td>
-        <td>{{row.id}}</td>
-        <td>{{row.name.first}}</td>
-        <td>{{row.name.last}}</td>
-        <td>{{row.email}}</td>
-      </tr>      
-      <tr>
-        <td>
-          <button class="btn btn-primary fa fa-plus" 	
-          	@click="add()"></button>
-        </td>
-        <td>
-          <input class="form-control" v-model="newRow.id">
-        </td>
-        <td>
-          <input class="form-control" v-model="newRow.name.first">
-        </td>
-        <td>
-          <input class="form-control" v-model="newRow.name. last">
-        </td>
-        <td>
-          <input class="form-control" v-model="newRow.email">
-        </td>
-      </tr>
-    </tbody>
-  </table>
--->
-
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
     <h1>{{ heading | capitalize_all }}</h1>
     <h2>Current {{ unit_activity_type | capitalize }}</h2>
-    <ul>
-      <li v-for="item in curitems">{{ item.name }} = {{ item.value }}</li>
-    </ul>
+    <map_table_h> </map_table_h>
     <h2>Previous {{ unit_activity_type | capitalize | pluralize }}</h2>
-    <ul>
-      <li v-for="item in pastitems">{{ item.name }} = {{ item.value }}</li>
-    </ul>
+    <map_table_h> </map_table_h>
     <h2>All {{ unit_activity_type | capitalize | pluralize }}</h2>
-    <ul>
-      <li v-for="item in allitems">{{ item.name }} = {{ item.value }}</li>
-    </ul>
+    <map_table_h> </map_table_h>
   </div>
 </template>
 <!-- >>> template block -->
-
 <!-- <<< script block -->
 <script>
 import Pluralize from 'pluralize'
+import MapTableH from './map_table_h.vue'
 
 function _capitalize (val) {
   return val.charAt (0).toUpperCase () + val.slice (1)
@@ -73,6 +26,9 @@ var _field_descr = {
 
 export default {
   name: 'mckbt-panel',
+  components: {
+    'map_table_h': MapTableH,
+  },
   props: {
     unit_activity_type: {
       default: 'level',
@@ -83,19 +39,19 @@ export default {
       type: String,
     },
     cur_rec: {
-      type: Object,
+      type: Array,
       default: function () {
         return ['id', 'cluster', 'mastered', 'time', 'npts']
       }
     },
     prev_rec: {
-      type: Object,
+      type: Array,
       default: function () {
         return ['ids', 'clusters', 'mastereds', 'times', 'nptss']
       }
     },
     all_rec: {
-      type: Object,
+      type: Array,
       default: function () {
         return ['time', 'npts', 'mastereds']
       }
@@ -135,7 +91,6 @@ export default {
 }
 </script>
 <!-- >>> script block -->
-
  <!-- <<< style block, scoped -->
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
