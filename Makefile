@@ -1,6 +1,10 @@
-.PHONY: build dev
+SRC_FILES:=$(wildcard src src/* src/*/*)
 
-build:
+.PHONY: dev
+
+build: dist/index.html
+
+dist/index.html: $(SRC_FILES)
 	npm run build
 
 dev:
