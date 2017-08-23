@@ -22,14 +22,29 @@ export default {
     data: {
       type: null,
       default: function () {
-        return [['key 1', 'value 1'], ['key 2', 'value 2']]
+        return [['key 1', 'value 1'], ['key 2', 'value 2'], ['k3', 'val 3']]
       },
-      validate: function (val) {
-        let k_, v_, e
-        for (let v of val) {
-          try {
-             [k_, v_] = v
-          } catch (e) {
+      validator: function (val) {
+        if ( val [Symbol.iterator] == undefined ) {
+          console.log ('data must be an iterable.')
+          return false
+        }
+        // Micro-check instance of common repeatable iterable.  Map needs no
+        // checking at all.
+        if ( val instanceof Array || val instanceof Set ) {
+          let v, _k, _v, _rest, e, ok = true
+          for (v of val) { // Repeatable iterable---safe to iterate over.
+            try {
+              [_k, _v, ..._rest] = v
+              if (_rest.length) ok = false
+              else if ( _v == undefined || _k == undefined ) ok = false
+            } catch (e) {
+              ok = false
+            }
+            if ( ! ok ) break
+          }
+          if ( ! ok ) {
+            console.log ('** Data validation failed for element "' + v + '".')
             return false
           }
         }
