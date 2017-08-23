@@ -20,9 +20,20 @@ export default {
   name: 'map_table_h',
   props: {
     data: {
-      type: Array,
+      type: null,
       default: function () {
         return [['key 1', 'value 1'], ['key 2', 'value 2']]
+      },
+      validate: function (val) {
+        let k_, v_, e
+        for (let v of val) {
+          try {
+             [k_, v_] = v
+          } catch (e) {
+            return false
+          }
+        }
+        return true
       },
     },
   },
