@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div id="app-innerframe">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -17,6 +19,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#app-innerframe {
+  display: inline-block;
 }
 </style>

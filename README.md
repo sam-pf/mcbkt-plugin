@@ -1,8 +1,8 @@
 # mcbkt-panel
 
-> MCBKT plugin for activity such as Ramp Game
+MCBKT plugin for activity such as Ramp Game
 
-## Build Setup
+# Build Setup
 
 ``` bash
 # install dependencies

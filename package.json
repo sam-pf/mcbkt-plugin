@@ -2,7 +2,7 @@
   "name": "mcbkt-panel",
   "version": "1.0.0",
   "description": "MCBKT plugin for activity such as Ramp Game",
-  "author": "Physics Front Sam <Sam@physicsfront.com>",
+  "author": "Physics Front, Sam <Sam@physicsfront.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

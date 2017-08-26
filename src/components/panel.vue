@@ -3,11 +3,11 @@
   <div class="mcbkt-panel">
     <h1>{{ heading | capitalize_all }}</h1>
     <h2>Current {{ unit_activity_type | capitalize }}</h2>
-    <map_table_h> </map_table_h>
+    <map_table_h :data="curitems"> </map_table_h>
     <h2>Previous {{ unit_activity_type | capitalize | pluralize }}</h2>
-    <map_table_h> </map_table_h>
+    <map_table_h :data="previtems"> </map_table_h>
     <h2>All {{ unit_activity_type | capitalize | pluralize }}</h2>
-    <map_table_h> </map_table_h>
+    <map_table_h :data="allitems"> </map_table_h>
   </div>
 </template>
 <!-- >>> template block -->
@@ -35,41 +35,30 @@ export default {
       type: String,
     },
     heading: {
-      default: 'Real time MCBKT analysis',
+      default: 'Real time MCBKT',
       type: String,
     },
-    cur_rec: {
-      type: Array,
-      default: function () {
-        return ['id', 'cluster', 'mastered', 'time', 'npts']
-      }
-    },
-    prev_rec: {
-      type: Array,
-      default: function () {
-        return ['ids', 'clusters', 'mastereds', 'times', 'nptss']
-      }
-    },
-    all_rec: {
-      type: Array,
-      default: function () {
-        return ['time', 'npts', 'mastereds']
-      }
-    }
   },
   data () {
     return {
       curitems: [
-        { name: "x", value: 1 },
-        { name: "y", value: 2 },
+        ['id'],
+        ['cluster', 'A'],
+        ['passed?', 'n'],
+        ['time', 30],
+        ['npts', 20]
       ],
-      pastitems: [
-        { name: "xx", value: 11 },
-        { name: "yy", value: 22 },
+      previtems: [
+        ['ids', [1,2]],
+        ['clusters', ['B','C']],
+        ['passed?', ['y', 'n']],
+        ['times', [720, 300]],
+        ['npts', [30, 30]],
       ],
       allitems: [
-        { name: "AA", value: 110 },
-        { name: "BB", value: 220 },
+        ['time', 1050],
+        ['npts', 80],
+        ['passed', [1]],
       ],
     }
   },
@@ -94,18 +83,14 @@ export default {
  <!-- <<< style block, scoped -->
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.mcbkt-panel {
+  font-size: 15px;
+}
+
 h1, h2 {
   font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
+  -webkit-margin-before: 0.2em;
+  -webkit-margin-after: 0.2em;
 }
 
 a {
