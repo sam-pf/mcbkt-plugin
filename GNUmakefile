@@ -11,25 +11,23 @@ TARGET_REFFILE:=dist/index.html
 
 .PHONY: build dev ifrpjs_always
 
-all: build
+all: ifrpjs_always build
 
-again: clean build
+again: ifrpjs_always clean build
 
 clean:
 	rm -rf dist/*
+
+dev: node_modules
+	npm run dev
 
 build: $(TARGET_REFFILE)
 
 $(TARGET_REFFILE): $(SRC_FILES) $(CONFIG_FILES) node_modules
 	npm run build
 
-$(IFRPJS_FILE): ifrpjs_always
-
 ifrpjs_always:
 	@_scr/update-iframe-phone
-
-dev: node_modules
-	npm run dev
 
 node_modules: package.json
 	npm install
