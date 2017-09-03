@@ -16,6 +16,7 @@
 <!-- >>> template block -->
 <!-- <<< script block -->
 <script>
+console.log (this)
 export default {
   name: 'map_table_h',
   props: {

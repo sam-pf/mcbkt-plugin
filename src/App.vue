@@ -8,6 +8,9 @@
 
 <script>
 export default {
+  created () {
+    //// var codap_phone = new iframePhone.IframePhoneRpcEndpoint ()
+  },
   name: 'app'
 }
 </script>

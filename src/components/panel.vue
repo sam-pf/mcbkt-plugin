@@ -20,10 +20,6 @@ function _capitalize (val) {
   return val.charAt (0).toUpperCase () + val.slice (1)
 }
 
-var _field_descr = {
-  npts: 'Number of Points',
-}
-
 export default {
   name: 'mckbt-panel',
   components: {
@@ -89,8 +85,12 @@ export default {
 
 h1, h2 {
   font-weight: normal;
-  -webkit-margin-before: 0.2em;
-  -webkit-margin-after: 0.2em;
+  -webkit-margin-before: 0.1em;
+  -webkit-margin-after: 0.1em;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 a {
