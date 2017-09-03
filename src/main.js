@@ -27,33 +27,20 @@ Object.defineProperty (Vue.prototype, '$iframePhone',
 
 var iframePhoneManager = function () {
 
-var STARTING_CONNECTION_STATE = 'initialized',
-    TIMEDOUT_CONNECTION_STATE = 'timed-out',
-    ACTIVE_CONNECTION_STATE = 'active',
-    RECORDING_DURATION = 15,
-    RECORDING_INTERVAL = 1;
-
-var dataManager = Object.create({ // <<<
+var dataManager = { // <<<
 
   state: null,
 
   init: function () {
-    var tester = window.location.search.indexOf("tester") !== -1;
-    this.listeners = [];
-    this.attributes = [];
+    this.listeners = []
+    this.attributes = []
     this.state = {
       title: "Getting Started with Dataflow",
       version: "0.1",
-      dimensions: {
-        width: tester? 300 : 450,
-        height: tester ? 450 : 400
-      },
-      connectionState: STARTING_CONNECTION_STATE,
-      tester: tester,
-      currentTopicIndex: 0,
-      showPopup: false
-    };
-    return this;
+      dimensions: { width: 450, height: 400 },
+      connectionState: null,
+    }
+    return this
   },
 
   register: function (listener) {
@@ -71,13 +58,13 @@ var dataManager = Object.create({ // <<<
       console.log ('** unregistered listener:' + listener)
     }
     console.log ('** (maybe) unregistered listener:' + listener)
-    dispatcher.destroy();
+    dispatcher.destroy ();
   },
 
   notify: function () {
-    this.listeners.forEach(function (listener) {
-      listener.setState(this.state);
-    }.bind(this));
+    this.listeners.forEach (function (listener) {
+      listener.setState (this.state);
+    }.bind (this));
   },
 
   setInteractiveFrame: function (frameData) {
@@ -90,7 +77,7 @@ var dataManager = Object.create({ // <<<
     if (frameData.savedState) {
       Object.assign(this.state, frameData.savedState);
     }
-    dispatcher.sendRequest({
+    dispatcher.sendRequest ({
       action: 'update',
       resource: 'interactiveFrame',
       values: {
@@ -107,60 +94,21 @@ var dataManager = Object.create({ // <<<
     };
   },
 
-  currentTopic: function () {
-    return topics[this.state.currentTopicIndex];
-  },
-
-  nextTopic: function () {
-    return topics[this.state.currentTopicIndex + 1];
-  },
-
   logMessageNotice: function (values) {
     console.log ('** logMessageNotice: values = ' + JSON.stringify (values))
     var currentTopic = this.currentTopic();
-
-    // the testing only cares about advancing the current topic
-    if (this.state.tester) {
-      if (values.topic === currentTopic.name) {
-        currentTopic.logged = true;
-        this.setState({
-          currentTopicIndex: this.getNextTopicIndex()
-        });
-      }
-      return;
-    }
 
     // when not showing a popup only check the current topic
     if (!this.state.showPopup) {
       if (values.topic === currentTopic.name) {
         currentTopic.logged = true;
-        this.setState({
+        this.setState ({
           showPopup: true
         });
       }
       return;
     }
 
-    // if showing popup and next topic comes in replace the popup with the next topic
-    var nextTopic = this.nextTopic();
-    if (values.topic === nextTopic.name) {
-      currentTopic.logged = true;
-      nextTopic.logged = true;
-      this.setState({
-        currentTopicIndex: this.getNextTopicIndex()
-      });
-    }
-  },
-
-  popupClosed: function () {
-    this.setState({
-      showPopup: false,
-      currentTopicIndex: this.getNextTopicIndex()
-    });
-  },
-
-  getNextTopicIndex: function () {
-    return Math.min(topics.length - 1, this.state.currentTopicIndex + 1);
   },
 
   setState: function (newState) {
@@ -176,143 +124,139 @@ var dataManager = Object.create({ // <<<
     return this.state;
   }
 
-}).init();
+}.init();
 // >>>
+var dispatcher = { // <<<
 
-var dispatcher = Object.create({ // jshint ignore:line // <<<
+  init: function () {
 
-    init: function () {
-
-      this.clientId = Math.round(10000000000000 * Math.random());
-      this.connection = new window.iframePhone.IframePhoneRpcEndpoint(this.handleCODAPRequest, "data-interactive", window.parent);
-      this.connectionState = STARTING_CONNECTION_STATE;
-      this.sendRequest({
-        "action": "get",
-        "resource": "interactiveFrame"
-      });
-      this.sendRequest({
-        "action": "register",
-        "resource": "logMessageMonitor",
-        "values": {
-          "clientId": this.clientId,
-          "message": "*",
-          // "topicPrefix": "RampGame/",
-          // "topicPrefix": "Dataflow/"
-        }
-      });
-      window.onunload = this.destroy.bind(this);
-
-      return this;
-    },
-
-    destroy: function () {
-      this.sendRequest({
-        "action": "unregister",
-        "resource": "logMessageMonitor",
-        "values": {
-          "clientId": this.clientId
-        }
-      });
-      this.connection.disconnect();
-    },
-
-    handleCODAPRequest: function (request, callback) {
-      console.log ('** handleCODAPRequest: ' + JSON.stringify (request))
-      function getResourceType(resourceSelector) {
-        return resourceSelector && resourceSelector.match(/^[^[]*/)[0];
+    this.clientId = 'RTMCBKT' + Math.round (10000000000000 * Math.random ())
+    this.connection = new window.iframePhone.IframePhoneRpcEndpoint (
+      this.handleCODAPRequest, "data-interactive", window.parent)
+    this.connectionState = null
+    this.sendRequest ({
+      "action": "get",
+      "resource": "interactiveFrame"
+    });
+    this.sendRequest ({
+      "action": "register",
+      "resource": "logMessageMonitor",
+      "values": {
+        "clientId": this.clientId,
+        "message": "*",
+        // "topicPrefix": "RampGame/",
+        // "topicPrefix": "Dataflow/"
       }
-      var resourceType = getResourceType(request.resource);
-      var success = false;
-      var values = null;
-      switch (resourceType) {
-        case 'interactiveState':
-          if (request.action === 'get') {
-            success = true;
-            values = dataManager.getPersistentState();
-          }
-          break;
+    });
+    window.onunload = this.destroy.bind(this);
 
-        case 'logMessageNotice':
-          if (request.action === 'notify') {
-            success = true;
-            dataManager.logMessageNotice(request.values);
-          }
-          break;
+    return this;
+  },
 
-        default:
-          console.log('Unsupported request from CODAP to DI: ' + JSON.stringify(request));
+  destroy : function () {
+    this.sendRequest ({
+      "action": "unregister",
+      "resource": "logMessageMonitor",
+      "values": {
+        "clientId": this.clientId
       }
-      callback({success: success, values: values});
-    },
+    })
+    this.connection.disconnect ()
+  },
 
-    sendRequest: function (request, handlingOptions, handler) {
-      handler = handler || this.handleResponse.bind(this);
-      this.connection.call(request, function (response) {
-        handler(request, response, handlingOptions);
-      }.bind(this));
-    },
-
-    parseResourceSelector: function (iResource) {
-      var selectorRE = /([A-Za-z0-9_-]+)\[([^\]]+)]/;
-      var result = {};
-      var selectors = iResource.split('.');
-      selectors.forEach(function (selector) {
-        var resourceType, resourceName;
-        var match = selectorRE.exec(selector);
-        if (selectorRE.test(selector)) {
-          resourceType = match[1];
-          resourceName = match[2];
-          result[resourceType] = resourceName;
-          result.type = resourceType;
-        } else {
-          result.type = selector;
-        }
-      });
-
-      return result;
-    },
-
-    handleResponse: function (request, result, handlingOptions) {
-      function handleOneResponse(iRequest, iResult, iResourceType) {
-        if (!iResult.success) {
-          console.log('Request to CODAP Failed: ' + JSON.stringify(request));
-          alert ('** Request to CODAP Failed: ' + JSON.stringify(request));
-        } else {
-          alert ('== Request to CODAP succeeded: ' + JSON.stringify(request));
-          if (request.action === 'get') {
-            switch (iResourceType) {
-              case 'interactiveFrame':
-                dataManager.setInteractiveFrame(iResult.values);
-                if (iResult.values.savedState) {
-                  dataManager.setState(iResult.values.savedState);
-                }
-                break;
-            }
-          }
-        }
-      }
-      var resourceObj;
-      var STARTING_CONNECTION_STATE = this.connectionState;
-
-      if (!result) {
-        console.log('Request to CODAP timed out: ' + JSON.stringify(request));
-        this.connectionState = TIMEDOUT_CONNECTION_STATE;
-      } else if (Array.isArray(result)) {
-        this.connectionState = ACTIVE_CONNECTION_STATE;
-        request.forEach(function (rq, rqix) {
-          resourceObj  = this.parseResourceSelector(rq.resource);
-          handleOneResponse(rq, result[rqix], resourceObj.type);
-        }.bind(this));
-      } else {
-        this.connectionState = ACTIVE_CONNECTION_STATE;
-        resourceObj  = this.parseResourceSelector(request.resource);
-        handleOneResponse(request, result, resourceObj.type);
-      }
-      if (STARTING_CONNECTION_STATE !== this.connectionState) {
-        dataManager.setState({connectionState: this.connectionState});
-      }
+  handleCODAPRequest : function (request, callback) {
+    console.log ('** handleCODAPRequest: ' + JSON.stringify (request))
+    function getResourceType (resourceSelector) {
+      return resourceSelector && resourceSelector.match (/^[^[]*/)[0]
     }
-  }).init();
+    var resourceType = getResourceType (request.resource)
+    var success = false
+    var values = null
+    switch (resourceType) {
+      case 'interactiveState':
+        if (request.action === 'get') {
+          success = true
+          values = dataManager.getPersistentState ()
+        }
+        break
+      case 'logMessageNotice':
+        if (request.action === 'notify') {
+          success = true;
+          dataManager.logMessageNotice (request.values)
+        }
+        break
+      default:
+        console.log ('Unsupported request from CODAP to DI: ' +
+                     JSON.stringify (request))
+    }
+    callback ({success: success, values: values})
+  },
+
+  sendRequest : function (request, handlingOptions, handler) {
+    handler = handler || this.handleResponse.bind (this)
+    this.connection.call (request, function (response) {
+      handler(request, response, handlingOptions)
+    }.bind (this))
+  },
+
+  parseResourceSelector : function (iResource) {
+    var selectorRE = /([A-Za-z0-9_-]+)\[([^\]]+)]/
+    var result = {}
+    var selectors = iResource.split ('.')
+    selectors.forEach (function (selector) {
+      var resourceType, resourceName
+      var match = selectorRE.exec (selector)
+      if (selectorRE.test (selector)) {
+        resourceType = match [1]
+        resourceName = match [2]
+        result [resourceType] = resourceName
+        result.type = resourceType
+      } else
+        result.type = selector
+    })
+    return result
+  },
+
+  handleResponse: function (request, result, handlingOptions) {
+    function handleOneResponse (iRequest, iResult, iResourceType) { // <<<
+      if (!iResult.success) {
+        console.log ('Request to CODAP Failed: ' + JSON.stringify (request))
+        alert ('** Request to CODAP Failed: ' + JSON.stringify (request))
+      } else {
+        alert ('== Request to CODAP succeeded: ' + JSON.stringify (request))
+        if (request.action === 'get') {
+          switch (iResourceType) {
+            case 'interactiveFrame':
+              dataManager.setInteractiveFrame (iResult.values)
+              if (iResult.values.savedState)
+                dataManager.setState(iResult.values.savedState)
+              break
+          }
+        }
+      }
+    } // >>>
+    var resourceObj
+    var STARTING_CONNECTION_STATE = this.connectionState
+
+    if (!result) {
+      console.log('Request to CODAP timed out: ' + JSON.stringify(request));
+      this.connectionState = TIMEDOUT_CONNECTION_STATE;
+    } else if (Array.isArray (result)) {
+      this.connectionState = ACTIVE_CONNECTION_STATE;
+      request.forEach (function (rq, rqix) {
+        resourceObj  = this.parseResourceSelector (rq.resource)
+        handleOneResponse (rq, result[rqix], resourceObj.type)
+      }.bind (this))
+    } else {
+      this.connectionState = ACTIVE_CONNECTION_STATE;
+      resourceObj  = this.parseResourceSelector (request.resource)
+      handleOneResponse (request, result, resourceObj.type)
+    }
+    if (STARTING_CONNECTION_STATE !== this.connectionState) {
+      dataManager.setState ({connectionState: this.connectionState});
+    }
+  }
+}.init();
 // >>>
 
   return {
@@ -321,7 +265,6 @@ var dispatcher = Object.create({ // jshint ignore:line // <<<
   }
 
 }()
-
 
 window.iframePhoneManager = iframePhoneManager
 Object.defineProperty (Vue.prototype, '$iframePhoneManager',

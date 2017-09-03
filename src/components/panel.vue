@@ -76,7 +76,7 @@ export default {
 }
 </script>
 <!-- >>> script block -->
- <!-- <<< style block, scoped -->
+<!-- <<< style block, scoped -->
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .mcbkt-panel {
