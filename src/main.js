@@ -27,6 +27,9 @@ Object.defineProperty (Vue.prototype, '$iframePhone',
 
 var iframePhoneManager = function () {
 
+// Here, dataManager and dispatcher are simplified and modified versions of
+// the two Objects in "DataflowGettingStarted" by Doug Martin and Jonthan
+// Sandoe.
 var dataManager = { // <<<
 
   state: null,
@@ -129,37 +132,31 @@ var dataManager = { // <<<
 var dispatcher = { // <<<
 
   init: function () {
-
     this.clientId = 'RTMCBKT' + Math.round (10000000000000 * Math.random ())
     this.connection = new window.iframePhone.IframePhoneRpcEndpoint (
       this.handleCODAPRequest, "data-interactive", window.parent)
     this.connectionState = null
     this.sendRequest ({
-      "action": "get",
-      "resource": "interactiveFrame"
-    });
+      action : "get",
+      resource : "interactiveFrame"
+    })
     this.sendRequest ({
-      "action": "register",
-      "resource": "logMessageMonitor",
-      "values": {
-        "clientId": this.clientId,
-        "message": "*",
-        // "topicPrefix": "RampGame/",
-        // "topicPrefix": "Dataflow/"
+      action : "register",
+      resource : "logMessageMonitor",
+      values : {
+        clientId : this.clientId,
+        message : "*",
       }
-    });
-    window.onunload = this.destroy.bind(this);
-
-    return this;
+    })
+    window.onunload = this.destroy.bind (this)
+    return this
   },
 
   destroy : function () {
     this.sendRequest ({
-      "action": "unregister",
-      "resource": "logMessageMonitor",
-      "values": {
-        "clientId": this.clientId
-      }
+      action : "unregister",
+      resource : "logMessageMonitor",
+      values : { clientId : this.clientId }
     })
     this.connection.disconnect ()
   },
@@ -200,6 +197,7 @@ var dispatcher = { // <<<
   },
 
   parseResourceSelector : function (iResource) {
+    console.log ('Got resource selector string = ' + iResource)
     var selectorRE = /([A-Za-z0-9_-]+)\[([^\]]+)]/
     var result = {}
     var selectors = iResource.split ('.')
@@ -219,7 +217,7 @@ var dispatcher = { // <<<
 
   handleResponse: function (request, result, handlingOptions) {
     function handleOneResponse (iRequest, iResult, iResourceType) { // <<<
-      if (!iResult.success) {
+      if (! iResult.success) {
         console.log ('Request to CODAP Failed: ' + JSON.stringify (request))
         alert ('** Request to CODAP Failed: ' + JSON.stringify (request))
       } else {
@@ -238,14 +236,14 @@ var dispatcher = { // <<<
     var resourceObj
     var STARTING_CONNECTION_STATE = this.connectionState
 
-    if (!result) {
+    if (! result) {
       console.log('Request to CODAP timed out: ' + JSON.stringify(request));
       this.connectionState = TIMEDOUT_CONNECTION_STATE;
     } else if (Array.isArray (result)) {
       this.connectionState = ACTIVE_CONNECTION_STATE;
       request.forEach (function (rq, rqix) {
         resourceObj  = this.parseResourceSelector (rq.resource)
-        handleOneResponse (rq, result[rqix], resourceObj.type)
+        handleOneResponse (rq, result [rqix], resourceObj.type)
       }.bind (this))
     } else {
       this.connectionState = ACTIVE_CONNECTION_STATE;
