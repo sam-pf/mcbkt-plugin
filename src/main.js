@@ -27,8 +27,9 @@ window.logdataListener = new logdata_listener (window.iframePhone,
    (logdata, callback) => {
       let logdata_str = JSON.stringify (logdata)
       console.log ("== main.js: got logdata: " + logdata_str)
-      if ( logdata_str.match (/starscore/i) )
-         callback ({'formatStr': 'test', 'MCBKT-result': 'coming soon'})
+      callback // just to make eslint happy
+      // if ( logdata_str.match (/starscore/i) )
+      //   callback ({'formatStr': 'test', 'MCBKT-result': 'coming soon'})
    })
 Object.defineProperty (Vue.prototype, '$logdataListener',
                        { value: window.logdataListener })
