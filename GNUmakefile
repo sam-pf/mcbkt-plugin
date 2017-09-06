@@ -4,22 +4,26 @@ ifeq "$(shell [[ $$PATH =~ $(PATHREGEX) ]] && echo 'y' || echo 'n' )" "n"
 export PATH:=./node_modules/.bin:$(PATH)
 endif
 
-IFRPJS_FILE:=src/js/iframe-phone.js
+IFRPJS_FILE:=src/js-ext/iframe-phone.js
 SRC_FILES:=$(IFRPJS_FILE) index.html package.json $(wildcard src src/* src/*/*)
 CONFIG_FILES:=$(wildcard config config/*)
 TARGET_REFFILE:=dist/index.html
 
-.PHONY: build dev ifrpjs_always
+.PHONY: build dev ifrpjs_always lint
 
-all: ifrpjs_always build
+all: ifrpjs_always lint build
 
-again: ifrpjs_always clean build
+again: ifrpjs_always clean lint build
 
 clean:
 	rm -rf dist/*
 
-dev: node_modules
+dev: node_modules lint
 	npm run dev
+
+lint:
+	eslint src/js/*.js
+	eslint src/*.js
 
 build: $(TARGET_REFFILE)
 

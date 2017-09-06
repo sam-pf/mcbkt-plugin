@@ -10,7 +10,7 @@ iframe_dir="$(git-cd -n _iframe)"
 	exit 2
 
 src_file="$iframe_dir/dist/iframe-phone.js"
-tgt_file="$this_dir/../src/js/iframe-phone.js"
+tgt_file="$this_dir/../src/js-ext/iframe-phone.js"
 
 pushd $iframe_dir 1>/dev/null
 
