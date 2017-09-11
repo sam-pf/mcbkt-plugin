@@ -6,7 +6,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
+
 // <<< window.iframePhone, window.logdataListener
+
 //
 // Also, these two globals are made available as (Vue instance).$iframePhone
 // and (Vue instance).$logdataListener.  However, it remains to be seen how
@@ -25,11 +28,17 @@ Object.defineProperty (Vue.prototype, '$iframePhone',
 import logdata_listener from './js/iframe-logdata-listener.js'
 window.logdataListener = new logdata_listener (window.iframePhone,
    (logdata, callback) => {
-      let logdata_str = JSON.stringify (logdata)
-      console.log ("== main.js: got logdata: " + logdata_str)
-      callback // just to make eslint happy
-      // if ( logdata_str.match (/starscore/i) )
-      //   callback ({'formatStr': 'test', 'MCBKT-result': 'coming soon'})
+      logdata.activity = 'Ramp Game JS'
+      // console.log ("== main.js: got logdata: " + logdata_str)
+      post_logdata_for_mcbkt (logdata).then (
+         function (data) {
+            data
+            callback // do stuff
+         },
+         function (error) {
+            error
+         }
+      )
    })
 Object.defineProperty (Vue.prototype, '$logdataListener',
                        { value: window.logdataListener })

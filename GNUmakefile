@@ -4,16 +4,16 @@ ifeq "$(shell [[ $$PATH =~ $(PATHREGEX) ]] && echo 'y' || echo 'n' )" "n"
 export PATH:=./node_modules/.bin:$(PATH)
 endif
 
-IFRPJS_FILE:=src/js-ext/iframe-phone.js
-SRC_FILES:=$(IFRPJS_FILE) index.html package.json $(wildcard src src/* src/*/*)
+EXT_JS_FILES:=$(wildcard src/js-ext/*.js)
+SRC_FILES:=$(EXT_JS_FILES) index.html package.json $(wildcard src src/* src/*/*)
 CONFIG_FILES:=$(wildcard config config/*)
 TARGET_REFFILE:=dist/index.html
 
-.PHONY: build dev ifrpjs_always lint
+.PHONY: build dev ifrpjs_always mcbkt_client_always lint
 
-all: ifrpjs_always lint build
+all: ifrpjs_always mcbkt_client_always lint build
 
-again: ifrpjs_always clean lint build
+again: ifrpjs_always mcbkt_client_always clean lint build
 
 clean:
 	rm -rf dist/*
@@ -32,6 +32,9 @@ $(TARGET_REFFILE): $(SRC_FILES) $(CONFIG_FILES) node_modules
 
 ifrpjs_always:
 	@_scr/update-iframe-phone
+
+mcbkt_client_always:
+	@_scr/update-mcbkt-client
 
 node_modules: package.json
 	npm install

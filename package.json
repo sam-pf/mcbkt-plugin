@@ -1,5 +1,5 @@
 {
-  "name": "mcbkt-panel",
+  "name": "mcbkt-plugin",
   "version": "1.0.0",
   "description": "MCBKT plugin to analyze log data from digital game (or game-like) activity such as Ramp Game",
   "author": "Physics Front, Sam <Sam@physicsfront.com>",

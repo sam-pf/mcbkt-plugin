@@ -1,0 +1,16 @@
+#!/bin/bash
+
+! . ~/.bash_funcs && echo '** Critical error (bash_funcs).' >&2 && exit 1
+
+this_dir=${BASH_SOURCE%/*}
+
+src_dir="$(git-cd -n client-mcbkt)"
+jsfile=mcbkt-client.js
+
+! [[ -d $src_dir ]] && echo '** No git source folder for '$jsfile'.' >&2 && \
+	exit 2
+
+src_file="$src_dir/dist/$jsfile"
+tgt_file="$this_dir/../src/js-ext/$jsfile"
+
+make -C "$src_dir" && cp -a "$src_file" "$tgt_file"

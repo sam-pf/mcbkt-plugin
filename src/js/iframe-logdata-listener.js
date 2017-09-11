@@ -14,6 +14,7 @@ export default function (iframePhone, logdata_callback,
    // hidden attributes, initialized
    const client_id = title + '--' + (new Date).getTime () + '--'
       + Math.round (10000000000 * Math.random ())
+   const my_formatStr_prefix = client_id + '::'
 
    // attributes, initialized
    this.last_codap_response = null
@@ -79,14 +80,23 @@ export default function (iframePhone, logdata_callback,
       },
 
       logMessageNotice: request => {
+         let json_data = request.values
          switch (request.action) {
             case 'notify':
-               if (request.values.formatStr.startsWith (client_id))
+               if (json_data.formatStr.startsWith (my_formatStr_prefix))
                   console.log ('== got boomeranged logdata: ' +
-                               JSON.stringify (request.values))
-               else
-                  logdata_callback (request.values, logdata_report_callback)
-               return {message: 'got logdata---thanks!'}
+                               JSON.stringify (json_data))
+               else {
+                  if (json_data.logMonitor &&
+                        client_id == json_data.logMonitor.clientId) {
+                     delete json_data.logMonitor
+                     json_data.iframe_logdata_client_id = client_id
+                     // time in sec, not in msec
+                     json_data.time = (new Date).getTime () * 1.e-3
+                     logdata_callback (json_data, logdata_report_callback)
+                  }
+               }
+               return {message: 'logdatum was received'}
             default:
                throw Error (_err_msg_for_unhandled_codap_request (request))
          }
@@ -202,14 +212,14 @@ export default function (iframePhone, logdata_callback,
       }
    }
    // >>>
-   this.send_request_to_codap = (req, opts) => {
+   this.send_request_to_codap = (req, opts) => { // <<<
       if (req.resource === 'logMessage' && req.action === 'notify') {
          if (req.values !== undefined) req.values = {}
          // These fields seem unallowed.
          // req.values._source = client_id
          // req.values.source = client_id
          // quick and dirty way to prevent circular behavior
-         req.values.formatStr = client_id + '--' + req.values.formatStr
+         req.values.formatStr = my_formatStr_prefix + req.values.formatStr
       }
       connection.call (req, response => this.handle_codap_response (
          req, response, opts))
