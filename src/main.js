@@ -28,6 +28,7 @@ Object.defineProperty (Vue.prototype, '$iframePhone',
 import logdata_listener from './js/iframe-logdata-listener.js'
 window.logdataListener = new logdata_listener (window.iframePhone,
    (logdata, callback) => {
+      logdata.application = 'CODAP'
       logdata.activity = 'Ramp Game 2017 09'
       // console.log ("== main.js: got logdata: " + logdata_str)
       post_logdata_for_mcbkt (logdata).then (
