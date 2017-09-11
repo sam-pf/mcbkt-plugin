@@ -34,11 +34,12 @@ window.logdataListener = new logdata_listener (window.iframePhone,
                    JSON.stringify (logdata))
       post_logdata_for_mcbkt (logdata).then (
          function (data) {
-            data
+            console.log ("== main.js: received data from UKDE: " +
+                         JSON.stringify (data))
             callback // do stuff
          },
          function (error) {
-            error
+            error // do stuff
          }
       )
    })
