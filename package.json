@@ -5,9 +5,10 @@
   "author": "Physics Front, Sam <Sam@physicsfront.com>",
   "private": true,
   "scripts": {
-    "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
-    "build": "node build/build.js"
+    "dev": "node build/dev-server.js",
+    "build": "node build/build.js",
+    "buildpro": "node build/buildpro.js"
   },
   "dependencies": {
     "pluralize": "^7.0.0",

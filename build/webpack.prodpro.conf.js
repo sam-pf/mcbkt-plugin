@@ -10,7 +10,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 // This is the only line that differs between webpack.prod and webpack.prodpro.
-var confmap = config.build
+var confmap = config.buildpro
 var env = confmap.env
 
 var webpackConfig = merge(baseWebpackConfig, {
