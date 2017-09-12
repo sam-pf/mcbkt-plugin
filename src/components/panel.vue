@@ -109,7 +109,7 @@ export default {
           let s = 0
           for (let i = 0; i < d.length; i++)
             s += d [i][key]
-          ans.push ([key + (key.endsWith ('s')?'': 's'), s? s: ""])
+          ans.push ([key, s? s: ""])
         }
         return ans
       },
