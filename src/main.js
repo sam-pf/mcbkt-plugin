@@ -36,10 +36,10 @@ window.logdataListener = new logdata_listener (window.iframePhone,
          function (data) {
             console.log ("== main.js: received data from UKDE: " +
                          JSON.stringify (data))
-            if (data.answer) {
+            //if (data.answer) {
                if (window.mcbkt_fit_consumer)
                   window.mcbkt_fit_consumer (data)
-            }
+            //}
             callback // TODO: pass logdata back to CODAP
          },
          function (error) {

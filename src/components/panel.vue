@@ -108,7 +108,7 @@ export default {
   created () {
     // this.all_data = []
     window.mcbkt_fit_consumer = function (data) {
-      console.log ('Panel got data: ' + data)
+      alert ('Panel got data: ' + data)
     }
   },
   methods: {
