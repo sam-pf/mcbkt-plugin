@@ -59,13 +59,14 @@ export default {
   },
   computed: {
     body_tooltip_cur: {
-      get: () => {
+      get: function () {
         const d = this.all_data
+        if (! d) return ''
         if (d.length)
           return d [d.length - 1].tooltip || ''
         return ''
       },
-      set: () => {}
+      set: function () {}
     },
     curitems: {
       get: function () {
