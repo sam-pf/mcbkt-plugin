@@ -34,32 +34,88 @@ export default {
       default: 'Real time MCBKT',
       type: String,
     },
+    curitem_keys: {
+      default: function () {
+        return ['id', 'cluster', 'time', 'npts'] // 'passed?'
+      },
+      type: Array
+    },
+    allitems_keys: {
+      default: function () {
+        return ['time', 'npts']
+      },
+      type: Array
+    }
   },
   data () {
     return {
-      curitems: [
-        ['id'],
-        ['cluster', 'A'],
-        ['passed?', 'n'],
-        ['time', 30],
-        ['npts', 20]
-      ],
-      previtems: [
-        ['ids', [1,2]],
-        ['clusters', ['B','C']],
-        ['passed?', ['y', 'n']],
-        ['times', [720, 300]],
-        ['npts', [30, 30]],
-      ],
-      allitems: [
-        ['time', 1050],
-        ['npts', 80],
-        ['passed', [1]],
+      all_data: [
+        {'id': 1, 'cluster': 'A', 'time': 30, 'npts': 5},
+        {'id': 2, 'cluster': 'B', 'time': 50, 'npts': 10},
+        {'id': 3, 'cluster': 'C', 'time': 100, 'npts': 10}
       ],
     }
   },
+  computed: {
+    curitems: {
+      get: function () {
+        const d = this.all_data
+        const keys = this.curitem_keys
+        var ans = []
+        if (d.length) {
+          const m = d [d.length - 1]
+          for (const key of keys)
+            ans.push ([key, m [key] || ''])
+        } else {
+          for (const key of keys)
+            ans.push ([key, ''])
+        }
+        return ans
+      },
+      set: function () {}
+    },
+    previtems: {
+      get: function () {
+        const d = this.all_data
+        const keys = this.curitem_keys
+        var ans = []
+        for (const key of keys) {
+          let a = []
+          for (let i = 0; i < d.length - 1; i++)
+            a.push (d [i][key])
+          ans.push ([key + (key.endsWith ('s')?'': 's'), a])
+        }
+        return ans
+      },
+      set: function () {}
+    },
+    allitems: {
+      get: function () {
+        const d = this.all_data
+        const keys = this.allitems_keys
+        var ans = []
+        for (const key of keys) {
+          let s = 0
+          for (let i = 0; i < d.length; i++)
+            s += d [i][key]
+          ans.push ([key + (key.endsWith ('s')?'': 's'), s? s: ""])
+        }
+        return ans
+      },
+      set: function () {}
+    }
+  },
+  created () {
+    // this.all_data = []
+    window.mcbkt_fit_consumer = function (data) {
+      console.log ('Panel got data: ' + data)
+    }
+  },
   methods: {
-    register_logdata_listener () {
+    // no methods have been found necessary just yet...
+    add_new_data () {
+    },
+    replace_last_data () {
     },
     unregister_logdata_listener () {
     },

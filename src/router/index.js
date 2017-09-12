@@ -9,7 +9,11 @@ export default new Router ({
     {
       path: '/',
       name: 'Panel',
-      component: Panel
+      component: Panel,
+      props: {
+         heading: '',
+         unit_activity_type: 'challenge'
+      }
     },
   ]
 })
