@@ -138,7 +138,7 @@ export default {
         prev_reffv_list.push (m.id)
       // console.log ('prev_reffv_list = ' + JSON.stringify (prev_reffv_list))
       const cluster_long = data.cluster_long || ''
-      const cluster_desc = data.cluster_descrption || ''
+      const cluster_desc = data.cluster_description || ''
       let tooltip = ''
       if (cluster_long && cluster_desc)
         tooltip = cluster_long + ' : ' + cluster_desc
