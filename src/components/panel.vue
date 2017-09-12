@@ -108,7 +108,7 @@ export default {
   created () {
     this.all_data = []
     window.mcbkt_fit_consumer = function (data) {
-      const times = data.answer ['times']
+      const times = data.times
       const cluster = data.cluster
       const reffv_list = data.reffv_list
       // TODO: do a better job of timing?  3 is an estimated "play time"
