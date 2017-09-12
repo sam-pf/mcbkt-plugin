@@ -127,7 +127,7 @@ export default {
         prev_reffv_list.push (m.id)
       console.log ('prev_reffv_list = ' + JSON.stringify (prev_reffv_list))
       let old_data
-      if (reffv_list == prev_reffv_list)
+      if (JSON.stringify (reffv_list) == JSON.stringify (prev_reffv_list))
         old_data = this.all_data.slice (0, this.all_data.length - 1)
       else
         old_data = this.all_data
