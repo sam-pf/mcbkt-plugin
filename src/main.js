@@ -30,11 +30,11 @@ window.logdataListener = new logdata_listener (window.iframePhone,
    (logdata, callback) => {
       logdata.application = 'CODAP'
       logdata.activity = 'Ramp Game 2017 09'
-      console.log ("== main.js: posting logdata for mcbkt analysis: " +
-                   JSON.stringify (logdata))
+      // console.log ("== main.js: posting logdata for mcbkt analysis: " +
+      //             JSON.stringify (logdata))
       post_logdata_for_mcbkt (logdata).then (
          function (data) {
-            console.log ("== main.js: received data from UKDE: " + data)
+            // console.log ("== main.js: received data from UKDE: " + data)
             let d = JSON.parse (data)
             if (d.answer && window.mcbkt_fit_consumer)
                window.mcbkt_fit_consumer (d)

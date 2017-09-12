@@ -49,11 +49,11 @@ export default {
   },
   data () {
     return {
-      all_data: [
+      all_data: [ // "just for demo": will be deleted on creation (see below)
         {'id': 1, 'cluster': 'A', 'time': 30, 'npts': 5},
         {'id': 2, 'cluster': 'B', 'time': 50, 'npts': 10},
         {'id': 3, 'cluster': 'C', 'time': 100, 'npts': 10}
-      ],
+      ]
     }
   },
   computed: {
@@ -108,7 +108,23 @@ export default {
   created () {
     this.all_data = []
     window.mcbkt_fit_consumer = function (data) {
-      alert ('Panel got data: ' + JSON.stringify (data))
+      const times = data.answer ['times']
+      const cluster = data.cluster
+      const reffv_list = data.reffv_list
+      // TODO: do a better job of timing?  3 is an estimated "play time"
+      const npts = times.length
+      const time = Math.round (times [npts - 1] - times [0] + 3)
+      const id = reffv_list [reffv_list.length - 1]
+      let prev_reffv_list = []
+      for (const m of this.all_data)
+        prev_reffv_list.push (m.id)
+      let old_data
+      if (reffv_list == prev_reffv_list)
+        old_data = this.all_data.slice (0, this.all_data.length - 1)
+      else
+        old_data = this.all_data
+      this.all_data = old_data.concat ({'id': id, 'cluster': cluster,
+          'time': time, 'npts': npts})
     }
   },
   methods: {
