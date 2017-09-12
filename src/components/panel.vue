@@ -107,14 +107,21 @@ export default {
   },
   created () {
     this.all_data = []
-    window.mcbkt_fit_consumer = function (data) {
+    window.mcbkt_fit_consumer = data => {
       const times = data.times
+      console.log ('times = ' + JSON.stringify (times))
       const cluster = data.cluster
+      console.log ('cluster = ' + cluster)
       const reffv_list = data.reffv_list
+      console.log ('reffv_list = ' + JSON.stringify (reffv_list))
       // TODO: do a better job of timing?  3 is an estimated "play time"
       const npts = times.length
+      console.log ('npts = ' + npts)
       const time = Math.round (times [npts - 1] - times [0] + 3)
+      console.log ('time = ' + time)
       const id = reffv_list [reffv_list.length - 1]
+      console.log ('id = ' + id)
+      console.log ('this.all_data = ' + JSON.stringify (this.all_data))
       let prev_reffv_list = []
       for (const m of this.all_data)
         prev_reffv_list.push (m.id)
