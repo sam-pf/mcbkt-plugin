@@ -3,7 +3,8 @@
   <div class="mcbkt-panel">
     <h1>{{ heading | capitalize_all }}</h1>
     <h2>Current {{ unit_activity_type | capitalize }}</h2>
-    <map_table_h :data="curitems"> </map_table_h>
+    <map_table_h :data="curitems" :body_tooltip="body_tooltip_cur">
+    </map_table_h>
     <h2>Previous {{ unit_activity_type | capitalize | pluralize }}</h2>
     <map_table_h :data="previtems"> </map_table_h>
     <h2>All {{ unit_activity_type | capitalize | pluralize }}</h2>
@@ -57,6 +58,15 @@ export default {
     }
   },
   computed: {
+    body_tooltip_cur: {
+      get: () => {
+        const d = this.all_data
+        if (d.length)
+          return d [d.length - 1].tooltip || ''
+        return ''
+      },
+      set: () => {}
+    },
     curitems: {
       get: function () {
         const d = this.all_data
@@ -108,11 +118,11 @@ export default {
   created () {
     this.all_data = []
     window.mcbkt_fit_consumer = data => {
-      const times = data.times? data.times : []
+      const times = data.times || []
       // console.log ('times = ' + JSON.stringify (times))
-      const cluster = data.cluster? data.cluster : ''
+      const cluster = data.cluster || ''
       // console.log ('cluster = ' + cluster)
-      const reffv_list = data.reffv_list? data.reffv_list : []
+      const reffv_list = data.reffv_list || []
       // console.log ('reffv_list = ' + JSON.stringify (reffv_list))
       // TODO: do a better job of timing?  3 is an estimated "play time"
       const npts = times.length
@@ -126,13 +136,18 @@ export default {
       for (const m of this.all_data)
         prev_reffv_list.push (m.id)
       // console.log ('prev_reffv_list = ' + JSON.stringify (prev_reffv_list))
+      const cluster_long = data.cluster_long || ''
+      const cluster_desc = data.cluster_descrption || ''
+      let tooltip = ''
+      if (cluster_long && cluster_desc)
+        tooltip = cluster_long + ' : ' + cluster_desc
       let old_data
       if (reffv_list.join (',') === prev_reffv_list.join (','))
         old_data = this.all_data.slice (0, this.all_data.length - 1)
       else
         old_data = this.all_data
       this.all_data = old_data.concat ({'id': id, 'cluster': cluster,
-          'time': time, 'npts': npts})
+          'time': time, 'npts': npts, 'tooltip': tooltip})
     }
   },
   methods: {

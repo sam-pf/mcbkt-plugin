@@ -6,7 +6,7 @@
         <th v-for="key in keys">{{ '' + key }}</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody :title="body_tooltip">
       <tr>
         <td v-for="val in vals">{{ '' + val }}</td>
       </tr>
@@ -34,6 +34,10 @@ export default {
         return true
       },
     },
+    body_tooltip: {
+      type: String,
+      default: ''
+    }
   },
   data () { return {} },
   computed: {
