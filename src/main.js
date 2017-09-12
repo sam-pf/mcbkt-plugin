@@ -32,17 +32,21 @@ window.logdataListener = new logdata_listener (window.iframePhone,
       logdata.activity = 'Ramp Game 2017 09'
       // console.log ("== main.js: posting logdata for mcbkt analysis: " +
       //             JSON.stringify (logdata))
-      post_logdata_for_mcbkt (logdata).then (
-         function (data) {
+      post_logdata_for_mcbkt (logdata)
+      .then (
+         data => {
             // console.log ("== main.js: received data from UKDE: " + data)
             let d = JSON.parse (data)
             if (d.answer && window.mcbkt_fit_consumer)
                window.mcbkt_fit_consumer (d)
             callback // TODO: pass logdata back to CODAP
          },
-         function (error) {
+         error => {
             error // do stuff
          }
+      )
+      .catch (
+         err => { err }
       )
    })
 Object.defineProperty (Vue.prototype, '$logdataListener',
