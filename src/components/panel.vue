@@ -1,6 +1,7 @@
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
+    <p class="explain_cluster">{{ body_tooltip_cur_plus }}</p>
     <h1>{{ heading | capitalize_all }}</h1>
     <h2 class='curact'>Current {{ unit_activity_type | capitalize }}</h2>
     <map_table_h :data="curitems" :body_tooltip="body_tooltip_cur">
@@ -65,6 +66,19 @@ export default {
         if (d.length)
           return d [d.length - 1].tooltip || ''
         return ''
+      },
+      set: function () {}
+    },
+    body_tooltip_cur_plus: {
+      get: function () {
+        const btc = this.body_tooltip_cur
+        if (btc.startsWith ('A') || btc.startsWith ('B') ||
+              btc.startsWith ('E'))
+          return 'GREAT! ' + btc
+        else if (btc.startsWith ('C'))
+          return 'Good! ' + btc
+        else
+          return btc
       },
       set: function () {}
     },
@@ -187,6 +201,10 @@ h1, h2 {
   margin-bottom: 0.1em;
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.explain_cluster {
+  max-width: 300px;
 }
 
 .curact {

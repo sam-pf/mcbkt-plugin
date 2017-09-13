@@ -57,7 +57,7 @@ window.logdataListener = new logdata_listener (window.iframePhone,
       )
       .catch (() => {})
    },
-   'Real Time MCBKT', 1)
+   'Real Time MCBKT', 0)
 Object.defineProperty (Vue.prototype, '$logdataListener',
                        { value: window.logdataListener })
 
