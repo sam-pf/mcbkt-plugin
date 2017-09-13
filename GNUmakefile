@@ -10,11 +10,11 @@ CONFIG_FILES:=$(wildcard config config/*)
 TARGET_REFFILE:=dist/stg/index.html
 TARGET_REFFILE_PRO:=dist/pro/index.html
 
-.PHONY: build dev pro pub buildpro ifrpjs_always mcbkt_client_always lint
+.PHONY: build dev pro pub buildpro jsext lint
 
-all: ifrpjs_always mcbkt_client_always lint build
+all: jsext lint build
 
-again: ifrpjs_always mcbkt_client_always clean lint build
+again: jsext clean lint build
 
 # pro is for real production---must be built manually when time is right.
 pro: $(TARGET_REFFILE_PRO)
@@ -39,11 +39,10 @@ $(TARGET_REFFILE): $(SRC_FILES) $(CONFIG_FILES) node_modules
 $(TARGET_REFFILE_PRO): $(SRC_FILES) $(CONFIG_FILES) node_modules
 	npm run buildpro
 
-ifrpjs_always:
+jsext:
 	@_scr/update-iframe-phone
-
-mcbkt_client_always:
 	@_scr/update-mcbkt-client
+	@_scr/update-iframe-logdata-listener
 
 node_modules: package.json
 	npm install

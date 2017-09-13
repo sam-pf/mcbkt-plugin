@@ -25,7 +25,7 @@ if (! window.iframePhone) {
 Object.defineProperty (Vue.prototype, '$iframePhone',
                        { value: window.iframePhone })
 
-import logdata_listener from './js/iframe-logdata-listener.js'
+import logdata_listener from './js-ext/iframe-logdata-listener.js'
 window.logdataListener = new logdata_listener (window.iframePhone,
    (logdata, callback) => { // eslint-disable-line no-unused-vars
       logdata.application = 'CODAP'

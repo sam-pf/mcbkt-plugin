@@ -3,9 +3,13 @@
 ! . ~/.bash_funcs && echo '** Critical error (bash_funcs).' >&2 && exit 1
 
 this_dir=${BASH_SOURCE%/*}
+libname=${BASH_SOURCE##*update-}
 
-src_dir="$(git-cd -n client-mcbkt)"
-jsfile=mcbkt-client.js
+gitrepo=$libname
+[[ $gitrepo == mcbkt-client ]] && gitrepo=client-mcbkt
+
+src_dir="$(git-cd -n $gitrepo)"
+jsfile=$libname.js
 
 ! [[ -d $src_dir ]] && echo '** No git source folder for '$jsfile'.' >&2 && \
 	exit 2
