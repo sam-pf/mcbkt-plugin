@@ -74,11 +74,11 @@ export default {
         const btc = this.body_tooltip_cur
         if (btc.startsWith ('A') || btc.startsWith ('B') ||
               btc.startsWith ('E'))
-          return 'GREAT! ' + btc
+          return 'GREAT! Cluster ' + btc
         else if (btc.startsWith ('C'))
-          return 'Good! ' + btc
+          return 'Good! Cluster ' + btc
         else
-          return btc
+          return 'Cluster' + btc
       },
       set: function () {}
     },
@@ -204,7 +204,10 @@ h1, h2 {
 }
 
 .explain_cluster {
-  max-width: 300px;
+  max-width: 330px;
+  padding: 10px;
+  background-color: #b4d497;
+  font-size: 1.2em;
 }
 
 .curact {
