@@ -2,12 +2,12 @@
 <template>
   <div class="mcbkt-panel">
     <h1>{{ heading | capitalize_all }}</h1>
-    <h2>Current {{ unit_activity_type | capitalize }}</h2>
+    <h2 class='curact'>Current {{ unit_activity_type | capitalize }}</h2>
     <map_table_h :data="curitems" :body_tooltip="body_tooltip_cur">
     </map_table_h>
-    <h2>Previous {{ unit_activity_type | capitalize | pluralize }}</h2>
+    <h2 class='preact'>Previous {{ unit_activity_type | capitalize | pluralize }}</h2>
     <map_table_h :data="previtems"> </map_table_h>
-    <h2>All {{ unit_activity_type | capitalize | pluralize }}</h2>
+    <h2 class='allact'>All {{ unit_activity_type | capitalize | pluralize }}</h2>
     <map_table_h :data="allitems"> </map_table_h>
   </div>
 </template>
@@ -187,6 +187,18 @@ h1, h2 {
   margin-bottom: 0.1em;
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.curact {
+  font-color: blue;
+}
+
+.preact {
+  font-color: tomato;
+}
+
+.allact {
+  font-color: purple;
 }
 
 a {
