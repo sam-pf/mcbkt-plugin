@@ -1,3 +1,5 @@
+// This is the entry point for node.js for pro-building.
+
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'

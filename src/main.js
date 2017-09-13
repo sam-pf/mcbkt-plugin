@@ -27,7 +27,7 @@ Object.defineProperty (Vue.prototype, '$iframePhone',
 
 import logdata_listener from './js/iframe-logdata-listener.js'
 window.logdataListener = new logdata_listener (window.iframePhone,
-   (logdata, callback) => {
+   (logdata, callback) => { // eslint-disable-line no-unused-vars
       logdata.application = 'CODAP'
       logdata.activity = 'Ramp Game 2017 09'
       // console.log ("== main.js: posting logdata for mcbkt analysis: " +
@@ -39,15 +39,10 @@ window.logdataListener = new logdata_listener (window.iframePhone,
             let d = JSON.parse (data)
             if (d.answer && window.mcbkt_fit_consumer)
                window.mcbkt_fit_consumer (d)
-            callback // TODO: pass logdata back to CODAP
          },
-         error => {
-            error // do stuff
-         }
+         () => {}
       )
-      .catch (
-         err => { err }
-      )
+      .catch (() => {})
    })
 Object.defineProperty (Vue.prototype, '$logdataListener',
                        { value: window.logdataListener })

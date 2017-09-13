@@ -1,6 +1,8 @@
+// This is the entry point for node.js for stg-building.
+
 require('./check-versions')()
 
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = 'production_stg'
 
 var ora = require('ora')
 var rm = require('rimraf')

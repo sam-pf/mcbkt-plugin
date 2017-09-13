@@ -2,7 +2,6 @@
 var path = require('path')
 
 const buildconf_base = {
- env: require('./prod.env'),
  assetsSubDirectory: 'static',
  productionSourceMap: true,
  // Gzip off by default as many popular static hosts such as
@@ -21,12 +20,14 @@ const buildconf_base = {
 module.exports = {
 
   build: Object.assign ({ // stg
+    env: require('./stg.env'),
     index: path.resolve(__dirname, '../dist/stg/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist/stg'),
     assetsPublicPath: '/cdi/mcbkt-stg'
   }, buildconf_base),
 
   buildpro: Object.assign ({ // pro
+    env: require('./pro.env'),
     index: path.resolve(__dirname, '../dist/pro/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist/pro'),
     assetsSubDirectory: 'static',
