@@ -71,7 +71,8 @@ export default {
     },
     body_tooltip_cur_plus: {
       get: function () {
-        const btc = this.body_tooltip_cur
+        const btc = this.body_tooltip_cur.trim ()
+        if (! btc.length) return ''
         if (btc.startsWith ('A') || btc.startsWith ('B') ||
               btc.startsWith ('E'))
           return 'GREAT! Cluster ' + btc
