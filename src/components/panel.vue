@@ -190,15 +190,15 @@ h1, h2 {
 }
 
 .curact {
-  font-color: blue;
+  color: blue;
 }
 
 .preact {
-  font-color: tomato;
+  color: tomato;
 }
 
 .allact {
-  font-color: purple;
+  color: purple;
 }
 
 a {
