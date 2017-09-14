@@ -79,7 +79,7 @@ export default {
         else if (btc.startsWith ('C'))
           return 'Good! Cluster ' + btc
         else
-          return 'Cluster' + btc
+          return 'Cluster ' + btc
       },
       set: function () {}
     },
