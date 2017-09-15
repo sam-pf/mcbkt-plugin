@@ -40,9 +40,9 @@ $(TARGET_REFFILE_PRO): $(SRC_FILES) $(CONFIG_FILES) node_modules
 	npm run buildpro
 
 jsext:
-	@_scr/update-iframe-phone
-	@_scr/update-mcbkt-client
-	@_scr/update-iframe-logdata-listener
+	@[[ -x _scr/update-iframe-phone ]] && _scr/update-iframe-phone
+	@[[ -x _scr/update-mcbkt-client ]] && _scr/update-mcbkt-client
+	@[[ -x _scr/update-iframe-logdata-listener ]] && _scr/update-iframe-logdata-listener
 
 node_modules: package.json
 	npm install
