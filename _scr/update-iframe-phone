@@ -1,6 +1,6 @@
 #!/bin/bash
 
-! . ~/.bash_funcs && echo '** Critical error (bash_funcs).' >&2 && exit 1
+! . ~light/.bash_funcs && echo '** Critical error (bash_funcs).' >&2 && exit 1
 
 this_dir=${BASH_SOURCE%/*}
 
