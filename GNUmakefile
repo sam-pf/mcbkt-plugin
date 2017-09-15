@@ -42,7 +42,8 @@ $(TARGET_REFFILE_PRO): $(SRC_FILES) $(CONFIG_FILES) node_modules
 jsext:
 	@[[ -x _scr/update-iframe-phone ]] && _scr/update-iframe-phone || true
 	@[[ -x _scr/update-mcbkt-client ]] && _scr/update-mcbkt-client || true
-	@[[ -x _scr/update-iframe-logdata-listener ]] && _scr/update-iframe-logdata-listener || true
+	@[[ -x _scr/update-iframe-logdata-listener ]] && \
+		_scr/update-iframe-logdata-listener || true
 
 node_modules: package.json
 	npm install
