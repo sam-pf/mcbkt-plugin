@@ -1,9 +1,19 @@
 stages:
   - build
+  - deploy
 
-build:
+stg:
   type: build
   script:
-    - sudo ~gitlab-runner/scr/dispatch do-all
+    - sudo ~gitlab-runner/scr/dispatch stg
   only:
     - master
+
+pro:
+  type: deploy
+  script:
+    - sudo ~gitlab-runner/scr/dispatch pro
+  only:
+    - /release$/
+  except:
+    - branches
