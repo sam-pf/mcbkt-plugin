@@ -13,7 +13,5 @@ pro:
   type: deploy
   script:
     - sudo ~gitlab-runner/scr/dispatch pro
-  only:
-    - /release$/
   except:
     - branches
