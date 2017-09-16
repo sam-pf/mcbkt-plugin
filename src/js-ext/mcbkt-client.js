@@ -1,6 +1,13 @@
 /**
  * @file This module contains utility functions for accessing MCBKT engine of
  *    <a href="https://ukde.physicsfront.com">UKDE by Physics Front</a>.
+ *    By design, the utility functions contained in this module are
+ *    content-agnostic and merely make generic ajax calls.  So, this module
+ *    has no knowledge about how UKDE connections actually work.  The actual
+ *    work is to be carried out by the (hidden and hard-coded) URLs
+ *    referenced in this file.  Such work should be carried out in a secure
+ *    manner in the backend: this is the job left for the users of this
+ *    module.
  * @copyright (c) 2017, Sam Gweon (Sam@physicsfront.com)
  * @license <a href="https://www.apache.org/licenses/LICENSE-2.0">
  *    Apache License, Version 2.0</a> (also, see file NOTICE).
@@ -8,4 +15,4 @@
  * @version 0.1.0
  * @module mcbkt-client
  */
-"use strict";function embedded_in_codap(){return true}export function ajax_as_promise(url,method="GET",data,header){if(!embedded_in_codap())return;method=method.toUpperCase();return new Promise((resolve,reject)=>{const req=new XMLHttpRequest;req.open(method,url);req.onload=(()=>req.status===200?resolve(req.response):reject(Error(req.statusText)));req.onerror=(e=>reject(Error(`Network Error: ${e}`)));if(data){req.setRequestHeader("Content-Type","application/json;charset=UTF-8");data=JSON.stringify(data)}if(header!==undefined)for(const key in header)req.setRequestHeader(key,header[key]);req.send(data)})};export function post_scores_for_mcbkt_analysis(data,url="https://ukde.physicsfront.com/mcbkt/codapproxy_stub",header){if(!embedded_in_codap())return;return ajax_as_promise(url,"post",data,header)};export function post_logdata_for_mcbkt_analysis(logdata,url="https://ukde.physicsfront.com/logdata/codapproxy_stub",header){if(!embedded_in_codap())return;return ajax_as_promise(url,"post",logdata,header)};export default post_logdata_for_mcbkt_analysis;
+"use strict";export function ajax_as_promise(url,method="GET",data,header){method=method.toUpperCase();return new Promise((resolve,reject)=>{const req=new XMLHttpRequest;req.open(method,url);req.onload=(()=>req.status===200?resolve(req.response):reject(Error(req.statusText)));req.onerror=(e=>reject(Error(`Network Error: ${e}`)));if(data){req.setRequestHeader("Content-Type","application/json;charset=UTF-8");data=JSON.stringify(data)}if(header!==undefined)for(const key in header)req.setRequestHeader(key,header[key]);req.send(data)})};export function post_scores_for_mcbkt_analysis(scores){let args=Array.prototype.splice.call(arguments,1);return ajax_as_promise(scores_url,"post",args)};export function post_logdata_for_mcbkt_analysis(logdata){let args=Array.prototype.splice.call(arguments,1);return ajax_as_promise(logdata_url,"post",args)};const base_url=function(){let e=window.location;return e.protocol+"//"+e.host+(e.port?":"+e.port:"")}()+"/_up";const logdata_url=base_url+"/logdata";const scores_url=base_url+"/scores";export default post_logdata_for_mcbkt_analysis;
