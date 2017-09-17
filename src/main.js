@@ -6,10 +6,8 @@
  * @license <a href="https://www.apache.org/licenses/LICENSE-2.0">
  *    Apache License, Version 2.0</a> (also, see file NOTICE).
  * @author Sam Gweon (Sam@physicsfront.com)
- * @version 0.1.0
+ * @version 0.2.0
  */
-
-
 
 // The entry point of webpack.
 //
@@ -20,29 +18,17 @@ import App from './App'
 import router from './router'
 
 import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
+import iframe_phone from './js-ext/iframe-phone.js'
 
-// <<< window.iframePhone, window.logdataListener
-
-//
-// Also, these two globals are made available as (Vue instance).$iframePhone
-// and (Vue instance).$logdataListener.  However, it remains to be seen how
-// Vue instance can be conveniently access in (or around) a single vue file
-// that defines a component (maybe Vue.extend is relevant?).
-
-import iframe_phone_module from './js-ext/iframe-phone.js'
-if (! window.iframePhone) {
-   if (! iframe_phone_module)
-      throw Error ('Failed to load module "iframePhone".')
-   window.iframePhone = iframe_phone_module
-}
-Object.defineProperty (Vue.prototype, '$iframePhone',
-                       { value: window.iframePhone })
+const APPLICATION = 'CODAP'
+const ACTIVITY = 'Ramp Game 2017 09'
 
 import logdata_listener from './js-ext/iframe-logdata-listener.js'
-window.logdataListener = new logdata_listener (window.iframePhone,
+const doer = new logdata_listener ( // eslint-disable-line no-unused-vars
+   window.iframePhone ?  window.iframePhone : iframe_phone,
    (logdata, callback) => { // eslint-disable-line no-unused-vars
-      logdata.application = 'CODAP'
-      logdata.activity = 'Ramp Game 2017 09'
+      logdata.application = APPLICATION
+      logdata.activity = ACTIVITY
       // console.log ("== main.js: posting logdata for mcbkt analysis: " +
       //             JSON.stringify (logdata))
       post_logdata_for_mcbkt (logdata)
@@ -58,10 +44,6 @@ window.logdataListener = new logdata_listener (window.iframePhone,
       .catch (() => {})
    },
    'Real Time MCBKT', 0)
-Object.defineProperty (Vue.prototype, '$logdataListener',
-                       { value: window.logdataListener })
-
-// >>>
 
 Vue.config.productionTip = false
 

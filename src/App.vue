@@ -9,7 +9,7 @@
 <script>
 export default {
   created () {
-    //// var codap_phone = new iframePhone.IframePhoneRpcEndpoint ()
+    // nothing done at the moment; just a reminder of a hook
   },
   name: 'app'
 }
