@@ -1,13 +1,6 @@
 /**
  * @file This module contains utility functions for accessing MCBKT engine of
  *    <a href="https://ukde.physicsfront.com">UKDE by Physics Front</a>.
- *    By design, the utility functions contained in this module are
- *    content-agnostic and merely make generic ajax calls.  So, this module
- *    has no knowledge about how UKDE connections actually work.  The actual
- *    work is to be carried out by the (hidden and hard-coded) URLs
- *    referenced in this file.  Such work should be carried out in a secure
- *    manner in the backend: this is the job left for the users of this
- *    module.
  * @copyright (c) 2017, Sam Gweon (Sam@physicsfront.com)
  * @license <a href="https://www.apache.org/licenses/LICENSE-2.0">
  *    Apache License, Version 2.0</a> (also, see file NOTICE).
