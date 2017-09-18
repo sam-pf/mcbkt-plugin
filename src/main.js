@@ -24,18 +24,33 @@ import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
 
 Vue.config.productionTip = false
 
-function summarize_mcbkt_result (new_doc, callback) {
+function summarize_mcbkt_result (new_doc, mcbkt_ans, callback) {
+   const sep = ';'
+   let parts = [] // parts should not accept any sep containing string
    const id = new_doc.id // challenge level
    if (! id) return
-   const level = id
+   parts.push ('L=' + id)
    const scores = new_doc.iscores.join (',')
    if (! scores) return
+   parts.push ('S=' + scores)
    const cluster_long = new_doc.cluster_long
-   const sep = ';'
    if (! cluster_long)
-      return callback ({formatStr: ['L=' + level, 'S=' + scores].join (sep)})
-   return callback ({formatStr: ['C=' + cluster_long, 'S=' + scores,
-                    'T=' + new_doc.time, 'N=' + new_doc.npts].join (sep)})
+      return callback ({formatStr: parts.join (sep)})
+   parts.push ('C=' + cluster_long)
+   parts.push ('T=' + new_doc.time)
+   parts.push ('N=' + new_doc.npts)
+   let parvals = []
+   for (const name in ['M', 'pli', 'pt', 'pg', 'ps'])
+      try {
+         const v = Math.round (mcbkt_ans [name][0] * 100)
+         parvals.push ((isNaN (v) || v === undefined)? '?': v)
+      } catch (e) {
+         parvals = []
+         break
+      }
+   if (parvals.length)
+      parts.push ('M+=' + parvals.join (','))
+   return callback ({formatStr: parts.join (sep)})
 }
 
 /* eslint-disable no-new */
@@ -70,12 +85,10 @@ new Vue ({
                   // console.log ("== main.js: received data from UKDE: " +
                   //              data)
                   let d = JSON.parse (data)
-                  if (d.answer) {
-                     if (this.mcbkt_fit_consumer) {
+                  if (d.answer)
+                     if (this.mcbkt_fit_consumer)
                         summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
-                                                callback)
-                     }
-                  }
+                                                d.answer, callback)
                },
                () => {}
             )
