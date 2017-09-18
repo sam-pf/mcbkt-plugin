@@ -30,7 +30,8 @@ new Vue ({
    router,
    template : '<App/>',
    components : { App },
-   props : {
+   props : ['application', 'activity', 'logdata_listener_name'],
+   propsData : {
       application : 'CODAP',
       activity : 'Ramp Game 2017 09',
       logdata_listener_name : 'Real Time MCBKT',
