@@ -68,8 +68,7 @@ new Vue ({
          (logdata, callback) => { // eslint-disable-line no-unused-vars
             // console.log ("== main.js: posting logdata for mcbkt analysis: "
             //              + JSON.stringify (logdata))
-            post_logdata_for_mcbkt (logdata, window.top.location,
-                                    this.ll.get_state (false))
+            post_logdata_for_mcbkt (logdata, this.ll.get_state (false))
             .then (
                data => {
                   // console.log ("== main.js: received data from UKDE: " +
