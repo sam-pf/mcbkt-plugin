@@ -37,8 +37,8 @@ new Vue ({
    created : function () {
 
       // console.log ('** created: this = ' + JSON.stringify (this))
-      console.log ('** created: this.mcbkt_fit_consumer = ' +
-                   this.mcbkt_fit_consumer)
+      // console.log ('** created: this.mcbkt_fit_consumer = ' +
+      //             this.mcbkt_fit_consumer)
 
       this.ll = new logdata_listener (
          window.iframePhone ? window.iframePhone : iframe_phone,
@@ -54,8 +54,10 @@ new Vue ({
                   //              data)
                   let d = JSON.parse (data)
                   // console.log ('** this = ' + JSON.stringify (this))
-                  console.log ('** this.mcbkt_fit_consumer = ' +
-                               this.mcbkt_fit_consumer)
+                  // console.log ('** this.mcbkt_fit_consumer = ' +
+                  //             this.mcbkt_fit_consumer)
+                  console.log ('** this.ll.get_state () = ' +
+                               JSON.stringify (this.ll.get_state ()))
                   if (d.answer && this.mcbkt_fit_consumer)
                      this.mcbkt_fit_consumer (d, window.top,
                            window.top.location, this.ll.get_state ())
