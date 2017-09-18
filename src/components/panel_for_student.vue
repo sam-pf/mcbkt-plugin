@@ -144,11 +144,12 @@ export default {
 }
 
 .scores {
-  color: tomato;
+  color: blue;
+  font-weight: bold;
 }
 
 .cluster_diagnostic {
-  color: #aaa;
+  color: #bbb;
 }
 
 a {
