@@ -40,10 +40,6 @@ new Vue ({
       this.ll = new logdata_listener (
          window.iframePhone ? window.iframePhone : iframe_phone,
          (logdata, callback) => { // eslint-disable-line no-unused-vars
-            logdata.application = this.application
-            logdata.activity = this.activity
-            console.log ('** Hey!' + logdata.application + logdata.activity +
-                         this.logdata_listener_name)
             // console.log ("== main.js: posting logdata for mcbkt analysis: "
             //              + JSON.stringify (logdata))
             post_logdata_for_mcbkt (logdata)
@@ -60,6 +56,8 @@ new Vue ({
             )
             .catch (() => {})
          },
-         this.logdata_listener_name, 0)
+         this.logdata_listener_name,
+         {'application': this.application, 'activity': this.activity},
+         0)
    }
 })
