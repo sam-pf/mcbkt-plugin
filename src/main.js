@@ -25,7 +25,6 @@ import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
 Vue.config.productionTip = false
 
 function summarize_mcbkt_result (new_doc, callback) {
-   console.log ('** CALLED: summarize_mcbkt_result!')
    let obj = {}
    const id = new_doc.id // challenge level
    if (! id) return
@@ -34,12 +33,13 @@ function summarize_mcbkt_result (new_doc, callback) {
    if (! scores) return
    obj.scores = scores
    const cluster = new_doc.cluster
-   if (! cluster) callback ({formatStr: JSON.stringify (obj)})
+   if (! cluster)
+      return callback ({formatStr: JSON.stringify (obj)})
    obj.cluster = cluster
    obj.cluster_long = new_doc.cluster_long
    obj.time = new_doc.time
    obj.npts = new_doc.npts
-   callback ({formatStr: JSON.stringify (obj)})
+   return callback ({formatStr: JSON.stringify (obj)})
 }
 
 /* eslint-disable no-new */
@@ -75,9 +75,7 @@ new Vue ({
                   //              data)
                   let d = JSON.parse (data)
                   if (d.answer) {
-                     console.log ('** GOT d.answer!')
                      if (this.mcbkt_fit_consumer) {
-                        console.log ('** CALLING mcbkt_fit_consumer!')
                         summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
                                                 callback)
                      }
