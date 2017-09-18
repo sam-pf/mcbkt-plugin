@@ -14,10 +14,6 @@
 // The Vue build version to load with the `import` command (runtime-only or
 // standalone) has been set in webpack.base.conf with an alias.
 
-const APPLICATION = 'CODAP'
-const ACTIVITY = 'Ramp Game 2017 09'
-const LOGDATA_LISTENER_NAME = 'Real Time MCBKT'
-
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -34,13 +30,19 @@ new Vue ({
    router,
    template : '<App/>',
    components : { App },
-   created : function () {
-
+   props : {
+      application : 'CODAP',
+      activity : 'Ramp Game 2017 09',
+      logdata_listener_name : 'Real Time MCBKT',
+   },
+   created : function () { // must be function, not =>
       this.ll = new logdata_listener (
          window.iframePhone ? window.iframePhone : iframe_phone,
          (logdata, callback) => { // eslint-disable-line no-unused-vars
-            logdata.application = APPLICATION
-            logdata.activity = ACTIVITY
+            logdata.application = this.application
+            logdata.activity = this.activity
+            console.log ('** Hey!' + logdata.application + logdata.activity +
+                         this.logdata_listener_name)
             // console.log ("== main.js: posting logdata for mcbkt analysis: "
             //              + JSON.stringify (logdata))
             post_logdata_for_mcbkt (logdata)
@@ -49,10 +51,6 @@ new Vue ({
                   // console.log ("== main.js: received data from UKDE: " +
                   //              data)
                   let d = JSON.parse (data)
-                  console.log ('** this.ll.get_state () = ' +
-                               JSON.stringify (this.ll.get_state ()))
-                  console.log ('** this.ll.get_state (false) = ' +
-                               JSON.stringify (this.ll.get_state (false)))
                   if (d.answer && this.mcbkt_fit_consumer)
                      this.mcbkt_fit_consumer (d, window.top,
                            window.top.location, this.ll.get_state (false))
@@ -61,7 +59,6 @@ new Vue ({
             )
             .catch (() => {})
          },
-         LOGDATA_LISTENER_NAME, 0)
-
+         this.logdata_listener_name, 0)
    }
 })
