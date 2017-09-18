@@ -31,7 +31,7 @@ new Vue ({
    template : '<App/>',
    components : { App },
    props : {
-      applicaton: {
+      application: {
          type: String,
          default: 'CODAP',
       },
