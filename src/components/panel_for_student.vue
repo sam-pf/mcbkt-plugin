@@ -139,12 +139,14 @@ p {
 }
 
 .scores_heading {
+  color: #4886ad;
   font-size: 1.2em;
   font-weight: bold;
 }
 
 .scores {
-  color: blue;
+  font-size: 1.5em;
+  color: #e2551b;
   font-weight: bold;
 }
 
