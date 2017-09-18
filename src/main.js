@@ -36,7 +36,7 @@ new Vue ({
    components : { App },
    created : function () {
 
-      console.log ('** created: this = ' + JSON.stringify (this))
+      // console.log ('** created: this = ' + JSON.stringify (this))
       console.log ('** created: this.mcbkt_fit_consumer = ' +
                    this.mcbkt_fit_consumer)
 
@@ -53,7 +53,7 @@ new Vue ({
                   // console.log ("== main.js: received data from UKDE: " +
                   //              data)
                   let d = JSON.parse (data)
-                  console.log ('** this = ' + JSON.stringify (this))
+                  // console.log ('** this = ' + JSON.stringify (this))
                   console.log ('** this.mcbkt_fit_consumer = ' +
                                this.mcbkt_fit_consumer)
                   if (d.answer && this.mcbkt_fit_consumer)
