@@ -92,12 +92,20 @@ new Vue ({
                         summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
                                                 d.answer, callback)
                },
-               () => {}
+               reason => {
+                  console.error ("** E: promise rejected.", reason)
+               }
             )
-            .catch (() => {})
+            .catch (
+               error => {
+                  console.error ("** E: error while processing promise.",
+                                 error)
+               }
+            )
          },
          this.logdata_listener_name,
          {'application': this.application, 'activity': this.activity},
+         false,
          0)
    }
 })
