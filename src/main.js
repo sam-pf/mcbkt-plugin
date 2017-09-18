@@ -49,9 +49,13 @@ new Vue ({
                   // console.log ("== main.js: received data from UKDE: " +
                   //              data)
                   let d = JSON.parse (data)
+                  console.log ('** this.ll.get_state () = ' +
+                               JSON.stringify (this.ll.get_state ()))
+                  console.log ('** this.ll.get_state (false) = ' +
+                               JSON.stringify (this.ll.get_state (false)))
                   if (d.answer && this.mcbkt_fit_consumer)
                      this.mcbkt_fit_consumer (d, window.top,
-                           window.top.location, this.ll.get_state ())
+                           window.top.location, this.ll.get_state (false))
                },
                () => {}
             )
