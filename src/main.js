@@ -49,6 +49,9 @@ function summarize_mcbkt_result (new_doc, mcbkt_ans, callback) {
       }
    if (parvals.length)
       parts.push ('M+=' + parvals.join (','))
+   try {
+      parts.push ('D=' + mcbkt_ans ['fit_duration'].toFixed (1))
+   } catch (e) {} // eslint-disable-line no-empty
    return callback ({formatStr: parts.join (sep)})
 }
 
