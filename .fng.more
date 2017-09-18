@@ -1,1 +1,3 @@
--F --f-name -F --fnode_modules -F --f-prune -F --f-o -F --f-name -F --fjs-ext -F --f-prune -F --f-o
+-F --f-name -F --fnode_modules -F --f-type -F --fd -F --f-prune -F --f-o
+-F --f-name -F --fjs-ext -F --f-type -F --fd -F --f-prune -F --f-o
+-F --f-name -F --fdist -F --f-type -F --fd -F --f-prune -F --f-o

@@ -133,7 +133,7 @@ export default {
   },
   created () {
     this.all_data = []
-    window.mcbkt_fit_consumer = data => {
+    this.$root.mcbkt_fit_consumer = data => {
       const times = data.times || []
       // console.log ('times = ' + JSON.stringify (times))
       const cluster = data.cluster || ''

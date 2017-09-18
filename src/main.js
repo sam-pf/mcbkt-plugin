@@ -13,37 +13,18 @@
 //
 // The Vue build version to load with the `import` command (runtime-only or
 // standalone) has been set in webpack.base.conf with an alias.
+
+const APPLICATION = 'CODAP'
+const ACTIVITY = 'Ramp Game 2017 09'
+const LOGDATA_LISTENER_NAME = 'Real Time MCBKT'
+
 import Vue from 'vue'
 import App from './App'
 import router from './router'
 
 import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
 import iframe_phone from './js-ext/iframe-phone.js'
-
-const APPLICATION = 'CODAP'
-const ACTIVITY = 'Ramp Game 2017 09'
-
 import logdata_listener from './js-ext/iframe-logdata-listener.js'
-const doer = new logdata_listener ( // eslint-disable-line no-unused-vars
-   window.iframePhone ?  window.iframePhone : iframe_phone,
-   (logdata, callback) => { // eslint-disable-line no-unused-vars
-      logdata.application = APPLICATION
-      logdata.activity = ACTIVITY
-      // console.log ("== main.js: posting logdata for mcbkt analysis: " +
-      //             JSON.stringify (logdata))
-      post_logdata_for_mcbkt (logdata)
-      .then (
-         data => {
-            // console.log ("== main.js: received data from UKDE: " + data)
-            let d = JSON.parse (data)
-            if (d.answer && window.mcbkt_fit_consumer)
-               window.mcbkt_fit_consumer (d)
-         },
-         () => {}
-      )
-      .catch (() => {})
-   },
-   'Real Time MCBKT', 0)
 
 Vue.config.productionTip = false
 
@@ -52,5 +33,38 @@ new Vue ({
    el : '#app',
    router,
    template : '<App/>',
-   components : { App }
+   components : { App },
+   created : () => {
+
+      console.log ('** created: this = ' + JSON.stringify (this))
+      console.log ('** created: this.mcbkt_fit_consumer = ' +
+                   this.mcbkt_fit_consumer)
+
+      this.ll = new logdata_listener (
+         window.iframePhone ? window.iframePhone : iframe_phone,
+         (logdata, callback) => { // eslint-disable-line no-unused-vars
+            logdata.application = APPLICATION
+            logdata.activity = ACTIVITY
+            // console.log ("== main.js: posting logdata for mcbkt analysis: "
+            //              + JSON.stringify (logdata))
+            post_logdata_for_mcbkt (logdata)
+            .then (
+               data => {
+                  // console.log ("== main.js: received data from UKDE: " +
+                  //              data)
+                  let d = JSON.parse (data)
+                  console.log ('** this = ' + JSON.stringify (this))
+                  console.log ('** this.mcbkt_fit_consumer = ' +
+                               this.mcbkt_fit_consumer)
+                  if (d.answer && this.mcbkt_fit_consumer)
+                     this.mcbkt_fit_consumer (d, window.top,
+                           window.top.location, this.ll.get_state ())
+               },
+               () => {}
+            )
+            .catch (() => {})
+         },
+         LOGDATA_LISTENER_NAME, 0)
+
+   }
 })
