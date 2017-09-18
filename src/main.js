@@ -30,11 +30,19 @@ new Vue ({
    router,
    template : '<App/>',
    components : { App },
-   props : ['application', 'activity', 'logdata_listener_name'],
-   propsData : {
-      application : 'CODAP',
-      activity : 'Ramp Game 2017 09',
-      logdata_listener_name : 'Real Time MCBKT',
+   props : {
+      applicaton: {
+         type: String,
+         default: 'CODAP',
+      },
+      activity: {
+         type: String,
+         default: 'Ramp Game 2017 09',
+      },
+      logdata_listener_name: {
+         type: String,
+         default: 'Real Time MCBKT',
+      },
    },
    created : function () { // must be function, not =>
       this.ll = new logdata_listener (

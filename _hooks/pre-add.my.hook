@@ -1,3 +1,6 @@
 #!/bin/bash
 
-make
+make jsext lint
+
+# the full make is disabled for now
+#make
