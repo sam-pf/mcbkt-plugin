@@ -6,7 +6,7 @@
  * @license <a href="https://www.apache.org/licenses/LICENSE-2.0">
  *    Apache License, Version 2.0</a> (also, see file NOTICE).
  * @author Sam Gweon (Sam@physicsfront.com)
- * @version 0.2.0
+ * @version 0.2.1
  */
 
 // The entry point of webpack.
@@ -18,11 +18,28 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
 import iframe_phone from './js-ext/iframe-phone.js'
 import logdata_listener from './js-ext/iframe-logdata-listener.js'
+import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
 
 Vue.config.productionTip = false
+
+function summarize_mcbkt_result (new_doc, callback) {
+   let obj = {}
+   const id = new_doc.id // challenge level
+   if (! id) return
+   obj.level = id
+   const scores = new_doc.iscores.join (',')
+   if (! scores) return
+   obj.scores = scores
+   const cluster = new_doc.cluster
+   if (! cluster) callback ({formatStr: JSON.stringify (obj)})
+   obj.cluster = cluster
+   obj.cluster_long = new_doc.cluster_long
+   obj.time = new_doc.time
+   obj.npts = new_doc.npts
+   callback ({formatStr: JSON.stringify (obj)})
+}
 
 /* eslint-disable no-new */
 new Vue ({
@@ -50,15 +67,17 @@ new Vue ({
          (logdata, callback) => { // eslint-disable-line no-unused-vars
             // console.log ("== main.js: posting logdata for mcbkt analysis: "
             //              + JSON.stringify (logdata))
-            post_logdata_for_mcbkt (logdata)
+            post_logdata_for_mcbkt (logdata, window.top.location,
+                                    this.ll.get_state (false))
             .then (
                data => {
                   // console.log ("== main.js: received data from UKDE: " +
                   //              data)
                   let d = JSON.parse (data)
-                  if (d.answer && this.mcbkt_fit_consumer)
-                     this.mcbkt_fit_consumer (d, window.top,
-                           window.top.location, this.ll.get_state (false))
+                  if (d.answer)
+                     if (this.mcbkt_fit_consumer)
+                        summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
+                                                callback)
                },
                () => {}
             )

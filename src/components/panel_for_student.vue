@@ -104,8 +104,10 @@ export default {
       let iscores = []
       for (const s of norm_scores)
         iscores.push (Math.round (s * 100))
-      this.all_data = old_data.concat ({id, cluster, time, npts, iscores,
-        cluster_long, cluster_desc})
+      const new_doc = {id, cluster, time, npts, iscores, cluster_long,
+        cluster_desc}
+      this.all_data = old_data.concat (new_doc)
+      return new_doc
     }
   },
   methods: {
