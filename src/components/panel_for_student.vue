@@ -87,7 +87,7 @@ export default {
       const times = data.times || []
       const cluster = data.cluster || ''
       const reffv_list = data.reffv_list || []
-      const npts = times.length
+      let npts = times.length
       if (npts != norm_scores.length) {
         console.warn ("** W: length mismatch between times and scores?!")
         if (norm_scores.length < npts)
