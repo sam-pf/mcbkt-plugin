@@ -40,7 +40,8 @@ function summarize_mcbkt_result (new_doc, mcbkt_ans, callback) {
    parts.push ('T=' + new_doc.time)
    parts.push ('N=' + new_doc.npts)
    let parvals = []
-   for (const name in ['M', 'pli', 'pt', 'pg', 'ps'])
+   console.log ('** mcbkt_ans = ' + JSON.stringify (mcbkt_ans))
+   for (const name of ['M', 'pli', 'pt', 'pg', 'ps'])
       try {
          const v = Math.round (mcbkt_ans [name][0] * 100)
          parvals.push ((isNaN (v) || v === undefined)? '?': v)
