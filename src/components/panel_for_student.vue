@@ -1,6 +1,7 @@
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
+    <p class="scores_heading">{{ scores_heading }}</p>
     <p class="scores">{{ scores }}</p>
     <p class="cluster_diagnostic">{{ cluster_diagnostic }}</p>
   </div>
@@ -21,7 +22,34 @@ export default {
       all_data: [],
     }
   },
+  props: {
+    unit_activity_type: {
+      default: 'level',
+      type: String,
+    },
+  },
   computed: {
+    curlevel: {
+      get: function () {
+        const d = this.all_data
+        if (! d) return ''
+        if (d.length)
+          return d [d.length - 1].id
+        return ''
+      },
+      set: function () {}
+    },
+    scores_heading: {
+      get: function () {
+        const d = this.all_data
+        if (! d) return 'Scores'
+        if (d.length)
+          return 'Scores for ' + _capitalize (this.unit_activity_type) +
+            d [d.length - 1].id
+        return 'Scores'
+      },
+      set: function () {}
+    },
     scores: {
       get: function () {
         const d = this.all_data
@@ -29,7 +57,7 @@ export default {
         if (! d) return ''
         if (d.length)
           iscores = d [d.length - 1].iscores
-        if (iscores) return iscores.join (', ')
+        if (iscores) iscores.join (', ')
         return ''
       },
       set: function () {}
@@ -100,8 +128,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .mcbkt-panel {
-  font-size: 12px;
+  font-size: 14px;
   max-width: 330px;
+}
+
+.scores_heading {
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 .scores {
@@ -109,7 +142,7 @@ export default {
 }
 
 .cluster_diagnostic {
-  color: purple;
+  color: #ddd;
 }
 
 a {
