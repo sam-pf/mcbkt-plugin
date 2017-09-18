@@ -72,7 +72,7 @@ export default {
         if (desc) {
           const cluster = d [d.length - 1].cluster
           if (cluster === 'A' || cluster === 'B' || cluster === 'E')
-            desc = '! ' + desc
+            desc = 'Great! ' + desc
           return desc
         }
         return ''
@@ -128,7 +128,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .mcbkt-panel {
-  font-size: 14px;
+  font-size: 15px;
   max-width: 330px;
 }
 
@@ -148,7 +148,7 @@ export default {
 }
 
 .cluster_diagnostic {
-  color: #ddd;
+  color: #aaa;
 }
 
 a {
