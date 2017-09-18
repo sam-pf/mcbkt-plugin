@@ -34,7 +34,7 @@ new Vue ({
    router,
    template : '<App/>',
    components : { App },
-   created : () => {
+   created : function () {
 
       console.log ('** created: this = ' + JSON.stringify (this))
       console.log ('** created: this.mcbkt_fit_consumer = ' +
