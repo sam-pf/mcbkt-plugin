@@ -167,7 +167,8 @@ export default {
     }
   },
   methods: {
-    // no methods have been found necessary just yet...
+    // no methods have been found necessary just yet...  so these methods are
+    // just blank place holders for now.
     add_new_data () {
     },
     replace_last_data () {

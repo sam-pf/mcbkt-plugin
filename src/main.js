@@ -6,7 +6,7 @@
  * @license <a href="https://www.apache.org/licenses/LICENSE-2.0">
  *    Apache License, Version 2.0</a> (also, see file NOTICE).
  * @author Sam Gweon (Sam@physicsfront.com)
- * @version 0.2.0
+ * @version 0.1.1
  */
 
 // The entry point of webpack.
