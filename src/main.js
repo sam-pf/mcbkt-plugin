@@ -38,7 +38,6 @@ function summarize_mcbkt_result (new_doc, mcbkt_ans, callback) {
       return callback ({formatStr: parts.join (sep)})
    parts.push ('C=' + cluster_long)
    parts.push ('T=' + new_doc.time)
-   parts.push ('N=' + new_doc.npts)
    let parvals = []
    for (const name of ['M', 'pli', 'pt', 'pg', 'ps'])
       try {

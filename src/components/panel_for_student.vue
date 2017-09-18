@@ -88,6 +88,11 @@ export default {
       const cluster = data.cluster || ''
       const reffv_list = data.reffv_list || []
       const npts = times.length
+      if (npts != norm_scores.length) {
+        console.warn ("** W: length mismatch between times and scores?!")
+        if (norm_scores.length < npts)
+          npts = norm_scores.length
+      }
       // TODO: do a better job of timing?  3 is an estimated "play time"
       const time = npts? Math.round (times [npts - 1] - times [0] + 3) : ''
       const id = reffv_list.length? reffv_list [reffv_list.length - 1] : ''
@@ -104,8 +109,7 @@ export default {
       let iscores = []
       for (const s of norm_scores)
         iscores.push (Math.round (s * 100))
-      const new_doc = {id, cluster, time, npts, iscores, cluster_long,
-        cluster_desc}
+      const new_doc = {id, cluster, time, iscores, cluster_long, cluster_desc}
       this.all_data = old_data.concat (new_doc)
       return new_doc
     }
