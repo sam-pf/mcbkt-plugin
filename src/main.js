@@ -25,6 +25,7 @@ import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
 Vue.config.productionTip = false
 
 function summarize_mcbkt_result (new_doc, callback) {
+   console.log ('** CALLED: summarize_mcbkt_result!')
    let obj = {}
    const id = new_doc.id // challenge level
    if (! id) return
@@ -74,10 +75,14 @@ new Vue ({
                   // console.log ("== main.js: received data from UKDE: " +
                   //              data)
                   let d = JSON.parse (data)
-                  if (d.answer)
-                     if (this.mcbkt_fit_consumer)
+                  if (d.answer) {
+                     console.log ('** GOT d.answer!')
+                     if (this.mcbkt_fit_consumer) {
+                        console.log ('** CALLING mcbkt_fit_consumer!')
                         summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
                                                 callback)
+                     }
+                  }
                },
                () => {}
             )
