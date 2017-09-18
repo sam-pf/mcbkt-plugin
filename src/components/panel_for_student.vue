@@ -132,7 +132,7 @@ export default {
   max-width: 330px;
 }
 
-.p {
+p {
   -webkit-margin-before: 3px;
   -webkit-margin-after: 3px;
   margin: 3px 0px;
