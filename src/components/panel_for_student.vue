@@ -57,7 +57,7 @@ export default {
         if (! d) return ''
         if (d.length)
           iscores = d [d.length - 1].iscores
-        if (iscores) iscores.join (', ')
+        if (iscores) return iscores.join (', ')
         return ''
       },
       set: function () {}
@@ -130,6 +130,12 @@ export default {
 .mcbkt-panel {
   font-size: 14px;
   max-width: 330px;
+}
+
+.p {
+  -webkit-margin-before: 3px;
+  -webkit-margin-after: 3px;
+  margin: 3px 0px;
 }
 
 .scores_heading {
