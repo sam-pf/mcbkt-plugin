@@ -2,9 +2,8 @@
 <template>
   <div class="mcbkt-panel">
     <p class="scores_heading">{{ scores_heading }}
-    <span class="cluster_diagnostic">{{ cluster_diagnostic }}</span>
+      <span class="cluster_diagnostic">{{ cluster_diagnostic }}</span>
     </p>
-    <p class="scores">{{ scores }}</p>
   </div>
 </template>
 <!-- >>> template block -->
@@ -42,25 +41,12 @@ export default {
     },
     scores_heading: {
       get: function () {
-        const d = this.all_data
-        if (! d) return 'Scores'
-        if (d.length)
-          return 'Scores for ' + _capitalize (this.unit_activity_type) +
-            d [d.length - 1].id
-        return 'Scores'
+        return 'This window should remain open; do not close.'
       },
       set: function () {}
     },
     scores: {
-      get: function () {
-        const d = this.all_data
-        let iscores
-        if (! d) return ''
-        if (d.length)
-          iscores = d [d.length - 1].iscores
-        if (iscores) return iscores.join (', ')
-        return ''
-      },
+      get: function () { return '' },
       set: function () {}
     },
     cluster_diagnostic: {
@@ -71,7 +57,7 @@ export default {
         if (d.length)
           desc = d [d.length - 1].cluster_long
         if (desc)
-          return ('CA' + desc).toLowerCase ()
+          return ('c' + this.curlevel + 'ca' + desc).toLowerCase ()
         return ''
       },
       set: function () {}
