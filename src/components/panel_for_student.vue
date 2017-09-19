@@ -41,7 +41,7 @@ export default {
     },
     scores_heading: {
       get: function () {
-        return 'This window should remain open; do not close.'
+        return 'Keep this window open&mdash;do not close.'
       },
       set: function () {}
     },
