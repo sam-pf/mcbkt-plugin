@@ -1,7 +1,8 @@
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
-    <p class="scores_heading">{{ scores_heading }}</p>
+    <p class="scores_heading">This window, RTMCBKT-{{ cluster_diagnostic }},
+      must remain open <i>at all times</i>.</p>
   </div>
 </template>
 <!-- >>> template block -->
@@ -35,13 +36,6 @@ export default {
         if (d.length)
           return d [d.length - 1].id
         return ''
-      },
-      set: function () {}
-    },
-    scores_heading: {
-      get: function () {
-        return 'This window, RTMCBKT-' + this.cluster_diagnostic +
-          ', should remain open <i>at all times</i>.'
       },
       set: function () {}
     },
