@@ -70,7 +70,7 @@ export default {
         if (d.length)
           desc = d [d.length - 1].cluster_long
         if (desc)
-          return 'CA' + desc
+          return ('CA' + desc).toLowerCase ()
         return ''
       },
       set: function () {}
