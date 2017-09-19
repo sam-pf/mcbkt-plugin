@@ -129,6 +129,7 @@ p {
 
 .scores_heading {
   color: #4886ad;
+  color: black;
   font-size: 1.2em;
   font-weight: bold;
 }
