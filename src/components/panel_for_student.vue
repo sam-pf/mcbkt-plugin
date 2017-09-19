@@ -68,13 +68,9 @@ export default {
         let desc
         if (! d) return ''
         if (d.length)
-          desc = d [d.length - 1].cluster_desc
-        if (desc) {
-          const cluster = d [d.length - 1].cluster
-          if (cluster === 'A' || cluster === 'B' || cluster === 'E')
-            desc = 'Great! ' + desc
-          return desc
-        }
+          desc = d [d.length - 1].cluster_long
+        if (desc)
+          return 'CA' + desc
         return ''
       },
       set: function () {}
