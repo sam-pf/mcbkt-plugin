@@ -40,8 +40,8 @@ export default {
     },
     scores_heading: {
       get: function () {
-        return 'This window (' + this.cluster_diagnostic +
-          ') should remain open at all times.'
+        return 'This window, RTMCBKT-' + this.cluster_diagnostic +
+          ', should remain open <i>at all times</i>.'
       },
       set: function () {}
     },
