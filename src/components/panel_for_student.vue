@@ -1,9 +1,10 @@
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
-    <p class="scores_heading">{{ scores_heading }}</p>
+    <p class="scores_heading">{{ scores_heading }}
+    <span class="cluster_diagnostic">{{ cluster_diagnostic }}</span>
+    </p>
     <p class="scores">{{ scores }}</p>
-    <p class="cluster_diagnostic">{{ cluster_diagnostic }}</p>
   </div>
 </template>
 <!-- >>> template block -->
@@ -150,6 +151,10 @@ p {
   font-size: 1.5em;
   color: #e2551b;
   font-weight: bold;
+}
+
+span .cluster_diagonstic {
+  margin-left: 15px;
 }
 
 .cluster_diagnostic {
