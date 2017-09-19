@@ -53,12 +53,13 @@ export default {
       get: function () {
         const d = this.all_data
         let desc
-        if (! d) return ''
+        const faker = 'd1dac'
+        if (! d) return faker
         if (d.length)
           desc = d [d.length - 1].cluster_long
         if (desc)
           return ('c' + this.curlevel + 'ca' + desc).toLowerCase ()
-        return ''
+        return faker
       },
       set: function () {}
     },
