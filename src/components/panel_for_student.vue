@@ -72,7 +72,7 @@ export default {
   },
   created () {
     this.all_data = []
-    this.$root.mcbkt_fit_consumer = data => {
+    this.$parent.mcbkt_fit_consumer = data => {
       const norm_scores = data.norm_scores || []
       const times = data.times || []
       const cluster = data.cluster || ''
