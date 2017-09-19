@@ -1,6 +1,6 @@
 <!-- <<< template block -->
 <template>
-  <div class="mcbkt-panel">
+  <div class="mcbkt-panel @cd_changed='cd_changed_cb'">
     <p class="scores_heading">{{ scores_heading }}
       <span class="cluster_diagnostic">{{ cluster_diagnostic }}</span>
     </p>
@@ -20,6 +20,7 @@ export default {
   data () {
     return {
       all_data: [],
+      _prev_cd: '',
     }
   },
   props: {
@@ -53,13 +54,18 @@ export default {
       get: function () {
         const d = this.all_data
         let desc
+        let rv
         const faker = 'd2dac'
-        if (! d) return faker
-        if (d.length)
-          desc = d [d.length - 1].cluster_long
-        if (desc)
-          return ('c' + this.curlevel + 'ca' + desc).toLowerCase ()
-        return faker
+        rv = faker
+        if (d) {
+          if (d.length)
+            desc = d [d.length - 1].cluster_long
+          if (desc)
+            rv = ('c' + this.curlevel + 'ca' + desc).toLowerCase ()
+        }
+        if (rv != this._prev_cd)
+          this.$emit ('cd_changed', rv)
+        return rv
       },
       set: function () {}
     },

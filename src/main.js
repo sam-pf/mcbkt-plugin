@@ -78,6 +78,11 @@ new Vue ({
          default: 'Real Time MCBKT',
       },
    },
+   methods : {
+      cd_changed_cb: function (cd) {
+         this.ll.update_title ('RTMCBKT ' +  cd)
+      }
+   },
    created : function () { // must be function, not =>
       this.ll = new logdata_listener (
          window.iframePhone ? window.iframePhone : iframe_phone,
@@ -92,10 +97,10 @@ new Vue ({
                   let d = JSON.parse (data)
                   if (d.answer)
                      if (this.mcbkt_fit_consumer) {
-                        const cd = summarize_mcbkt_result (
+                        summarize_mcbkt_result (
                            this.mcbkt_fit_consumer (d), d.answer, callback)
-                        if (cd)
-                           this.ll.update_title ('RT-MCBKT-' + cd)
+                        // if (cd)
+                        //   this.ll.update_title ('RT-MCBKT-' + cd)
                      }
                },
                reason => {
