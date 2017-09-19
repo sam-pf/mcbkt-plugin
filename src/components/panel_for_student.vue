@@ -53,7 +53,7 @@ export default {
       get: function () {
         const d = this.all_data
         let desc
-        const faker = 'd1dac'
+        const faker = 'd2dac'
         if (! d) return faker
         if (d.length)
           desc = d [d.length - 1].cluster_long
@@ -95,7 +95,7 @@ export default {
         iscores.push (Math.round (s * 100))
       const new_doc = {id, cluster, time, iscores, cluster_long, cluster_desc}
       this.all_data = old_data.concat (new_doc)
-      return new_doc
+      return {new_doc, cd: this.cluster_diagnostic}
     }
   },
   methods: {
@@ -141,12 +141,12 @@ p {
   font-weight: bold;
 }
 
-span .cluster_diagonstic {
+span .cluster_diagnostic {
   margin-left: 15px;
 }
 
 .cluster_diagnostic {
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: normal;
   color: #bbb;
 }

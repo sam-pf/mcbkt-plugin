@@ -24,7 +24,9 @@ import post_logdata_for_mcbkt from './js-ext/mcbkt-client.js'
 
 Vue.config.productionTip = false
 
-function summarize_mcbkt_result (new_doc, mcbkt_ans, callback) {
+function summarize_mcbkt_result (rv, mcbkt_ans, callback) {
+   const new_doc = rv.new_doc || {}
+   const cd = rv.cd || ""
    const sep = ';'
    let parts = [] // parts should not accept any sep containing string
    const id = new_doc.id // challenge level
@@ -52,7 +54,8 @@ function summarize_mcbkt_result (new_doc, mcbkt_ans, callback) {
    try {
       parts.push ('D=' + mcbkt_ans ['fit_duration'].toFixed (1))
    } catch (e) {} // eslint-disable-line no-empty
-   return callback ({formatStr: parts.join (sep)})
+   callback ({formatStr: parts.join (sep)})
+   return cd
 }
 
 /* eslint-disable no-new */
@@ -88,9 +91,12 @@ new Vue ({
                   //              data)
                   let d = JSON.parse (data)
                   if (d.answer)
-                     if (this.mcbkt_fit_consumer)
-                        summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
-                                                d.answer, callback)
+                     if (this.mcbkt_fit_consumer) {
+                        const cd = summarize_mcbkt_result (
+                           this.mcbkt_fit_consumer (d), d.answer, callback)
+                        if (cd)
+                           this.ll.update_title ('RT-MCBKT-' + cd)
+                     }
                },
                reason => {
                   console.error ("** E: promise rejected.", reason)
