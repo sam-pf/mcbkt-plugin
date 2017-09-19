@@ -1,9 +1,7 @@
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
-    <p class="scores_heading">{{ scores_heading }}
-      <span class="cluster_diagnostic">{{ cluster_diagnostic }}</span>
-    </p>
+    <p class="scores_heading">{{ scores_heading }}</p>
   </div>
 </template>
 <!-- >>> template block -->
@@ -42,7 +40,8 @@ export default {
     },
     scores_heading: {
       get: function () {
-        return 'This window should remain open at all times.'
+        return 'This window (' + this.cluster_diagnostic +
+          ') should remain open at all times.'
       },
       set: function () {}
     },
