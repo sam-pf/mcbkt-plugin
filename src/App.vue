@@ -63,7 +63,7 @@ export default {
    },
    methods : {
       cd_changed_cb: function (cd) {
-         this.ll.update_title ('RTMCBKT ' +  cd)
+         this.ll.update_title ('RTMCBKT-' +  cd)
       }
    },
    created : function () { // must be function, not =>

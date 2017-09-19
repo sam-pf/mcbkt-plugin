@@ -63,10 +63,8 @@ export default {
           if (desc)
             rv = ('c' + this.curlevel + 'ca' + desc).toLowerCase ()
         }
-        if (rv != this._prev_cd) {
-          console.log ('** EMIT cd_changed')
+        if (rv != this._prev_cd)
           this.$emit ('cd_changed', rv)
-        }
         return rv
       },
       set: function () {}
