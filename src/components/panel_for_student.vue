@@ -131,7 +131,7 @@ p {
   color: #4886ad;
   color: black;
   font-size: 1.2em;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .scores {
