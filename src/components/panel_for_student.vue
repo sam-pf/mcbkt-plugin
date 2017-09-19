@@ -41,7 +41,7 @@ export default {
     },
     scores_heading: {
       get: function () {
-        return 'This window should remain open.'
+        return 'This window should remain open at all times.'
       },
       set: function () {}
     },
@@ -144,6 +144,8 @@ span .cluster_diagonstic {
 }
 
 .cluster_diagnostic {
+  font-size: 1em;
+  font-weight: normal;
   color: #bbb;
 }
 
