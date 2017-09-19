@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="app-innerframe">
-      <router-view></router-view>
+      <router-view @cd_changed="cd_changed_cb"></router-view>
     </div>
   </div>
 </template>
