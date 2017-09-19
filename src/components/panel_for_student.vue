@@ -1,7 +1,7 @@
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
-    <p class="scores_heading">This window, RTMCBKT-{{ cluster_diagnostic }},
+    <p class="scores_heading">This window, rt-MCBKT-{{ cluster_diagnostic }},
       must remain open <i>at all times</i>.</p>
   </div>
 </template>
@@ -130,7 +130,7 @@ p {
 .scores_heading {
   color: #4886ad;
   color: #aaa;
-  font-size: 1.2em;
+  font-size: 0.9em;
   font-weight: normal;
 }
 
