@@ -1,7 +1,7 @@
 SHELL:=/bin/bash
 PATHREGEX:=(:|^)\./node_modules/\.bin(:|$$)
 ifeq "$(shell [[ $$PATH =~ $(PATHREGEX) ]] && echo 'y' || echo 'n' )" "n"
-export PATH:=./node_modules/.bin:$(PATH)
+	export PATH:=./node_modules/.bin:$(PATH)
 endif
 
 EXT_JS_FILES:=$(wildcard src/js-ext/*.js)
