@@ -18,7 +18,7 @@ export default new Router ({
     },
     {
       path: '/',
-      query: { for: 'researcher'},
+      query: { 'for': 'researcher'},
       name: 'Panel',
       component: Panel_researcher,
       props: {
