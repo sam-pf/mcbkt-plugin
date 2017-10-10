@@ -9,22 +9,21 @@ export default new Router ({
   routes: [
     {
       path: '/',
-      query: { 'for': 'researcher'},
-      name: 'Panel',
-      component: Panel_researcher,
-      props: {
-         heading: '',
-         unit_activity_type: 'challenge'
-      }
-    },
-    {
-      path: '/',
       name: 'Panel',
       component: Panel,
       props: {
          heading: '',
          unit_activity_type: 'challenge'
       }
+    },
+    {
+      path: '/researcher',
+      name: 'Panel_researcher', // what is name for?
+      component: Panel_researcher,
+      props: {
+         heading: '',
+         unit_activity_type: 'challenge'
+      },
     },
   ]
 })
