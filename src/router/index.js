@@ -9,8 +9,9 @@ export default new Router ({
   routes: [
     {
       path: '/',
+      query: { 'for': 'researcher'},
       name: 'Panel',
-      component: Panel,
+      component: Panel_researcher,
       props: {
          heading: '',
          unit_activity_type: 'challenge'
@@ -18,9 +19,8 @@ export default new Router ({
     },
     {
       path: '/',
-      query: { 'for': 'researcher'},
       name: 'Panel',
-      component: Panel_researcher,
+      component: Panel,
       props: {
          heading: '',
          unit_activity_type: 'challenge'
