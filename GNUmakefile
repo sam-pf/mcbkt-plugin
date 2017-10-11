@@ -20,6 +20,7 @@ again: jsext clean lint build
 pro: $(TARGET_REFFILE_PRO)
 pub: pro
 buildpro: pro
+live: dev
 
 clean:
 	rm -rf dist/*

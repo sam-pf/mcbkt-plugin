@@ -17,6 +17,7 @@
 <script>
 import Pluralize from 'pluralize'
 import MapTableH from './map_table_h.vue'
+import mcbkt_consumer_panel from './mcbkt_consumer_panel_mixin'
 
 function _capitalize (val) {
   return val.charAt (0).toUpperCase () + val.slice (1)
@@ -24,8 +25,16 @@ function _capitalize (val) {
 
 export default {
   name: 'mckbt-panel',
+  mixins: [mcbkt_consumer_panel],
   components: {
     'map_table_h': MapTableH,
+  },
+  data () {
+    return {
+      width: 335,
+      height: 500,
+      _prev_cd: '',
+    }
   },
   props: {
     unit_activity_type: {
@@ -47,15 +56,6 @@ export default {
         return ['time', 'npts']
       },
       type: Array
-    }
-  },
-  data () {
-    return {
-      all_data: [ // "just for demo": will be deleted on creation (see below)
-        {'id': 1, 'cluster': 'A', 'time': 30, 'npts': 5},
-        {'id': 2, 'cluster': 'B', 'time': 50, 'npts': 10},
-        {'id': 3, 'cluster': 'C', 'time': 100, 'npts': 10}
-      ]
     }
   },
   computed: {
@@ -130,55 +130,6 @@ export default {
       },
       set: function () {}
     }
-  },
-  created () {
-    this.all_data = []
-    this.$parent.mcbkt_fit_consumer = data => {
-      const times = data.times || []
-      // console.log ('times = ' + JSON.stringify (times))
-      const cluster = data.cluster || ''
-      // console.log ('cluster = ' + cluster)
-      const reffv_list = data.reffv_list || []
-      // console.log ('reffv_list = ' + JSON.stringify (reffv_list))
-      // TODO: do a better job of timing?  3 is an estimated "play time"
-      const npts = times.length
-      // console.log ('npts = ' + npts)
-      const time = npts? Math.round (times [npts - 1] - times [0] + 3) : ''
-      // console.log ('time = ' + time)
-      const id = reffv_list.length? reffv_list [reffv_list.length - 1] : ''
-      // console.log ('id = ' + id)
-      // console.log ('this.all_data = ' + JSON.stringify (this.all_data))
-      let prev_reffv_list = []
-      for (const m of this.all_data)
-        prev_reffv_list.push (m.id)
-      // console.log ('prev_reffv_list = ' + JSON.stringify (prev_reffv_list))
-      const cluster_long = data.cluster_long || ''
-      const cluster_desc = data.cluster_description || ''
-      let tooltip = ''
-      if (cluster_long && cluster_desc)
-        tooltip = cluster_long + ' : ' + cluster_desc
-      let old_data
-      if (reffv_list.join (',') === prev_reffv_list.join (','))
-        old_data = this.all_data.slice (0, this.all_data.length - 1)
-      else
-        old_data = this.all_data
-      this.all_data = old_data.concat ({'id': id, 'cluster': cluster,
-          'time': time, 'npts': npts, 'tooltip': tooltip})
-    }
-  },
-  methods: {
-    // no methods have been found necessary just yet...  so these methods are
-    // just blank place holders for now.
-    add_new_data () {
-    },
-    replace_last_data () {
-    },
-    unregister_logdata_listener () {
-    },
-    register_mcbkt_client (logdata_provider) {
-    },
-    unregister_mcbkt_client (logdata_provider) {
-    },
   },
   filters: {
     capitalize: _capitalize,
