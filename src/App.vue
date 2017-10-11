@@ -24,6 +24,10 @@ export default {
          type: String,
          default: 'Real Time MCBKT',
       },
+      version: {
+         type: String,
+         default: '--uknown-version--',
+      }
    },
    methods : {
       cd_changed_cb: function (cd) {
