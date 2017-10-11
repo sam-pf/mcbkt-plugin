@@ -7,7 +7,7 @@ import logdata_listener from '@/js-ext/iframe-logdata-listener.js'
 import post_logdata_for_mcbkt from '@/js-ext/mcbkt-client.js'
 
 function summarize_mcbkt_result (rv, mcbkt_ans, callback) { // <<<
-   const new_doc = rv.new_doc || {}
+   const new_doc = rv || {}
    const sep = ';'
    let parts = [] // parts should not accept any sep containing string
    const id = new_doc.id // challenge level
@@ -81,12 +81,11 @@ export default {
         this.post_mcbkt_fit_consumer_hook ()
       return new_doc
     }
-    console.log ('this.mcbkt_fit_consumer = ' + this.mcbkt_fit_consumer)
     this.ll = new logdata_listener (
       window.iframePhone ? window.iframePhone : iframe_phone,
       (logdata, callback) => {
-        console.log ("== mcbkt_consumer_panel: posting logdata for mcbkt " +
-                     "analysis: " + JSON.stringify (logdata))
+        // console.log ("== mcbkt_consumer_panel: posting logdata for mcbkt " +
+        //              "analysis: " + JSON.stringify (logdata))
         post_logdata_for_mcbkt (logdata, this.ll.get_state (false))
         .then (
           data => {
@@ -117,6 +116,5 @@ export default {
         verbosity: 0
       }
     )
-    console.log ('this.ll = ' + this.ll)
   }
 }
