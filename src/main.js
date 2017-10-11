@@ -8,6 +8,8 @@
  * @author Sam Gweon (Sam@physicsfront.com)
  * @version 0.3.0
  */
+// sync version with that in App (yet to figure out how to pass "version"
+// prop from this file)
 
 // The entry point of webpack.
 //
@@ -25,8 +27,5 @@ new Vue ({
    el: '#app',
    router,
    template: '<App/>',
-   components: { App },
-   propsData: {
-     version : '0.3.0'
-   }
+   components: { App }
 })

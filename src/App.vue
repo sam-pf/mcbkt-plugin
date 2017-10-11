@@ -8,7 +8,6 @@
 
 <script>
 
-
 export default {
    name: 'app',
    props : {
@@ -26,7 +25,8 @@ export default {
       },
       version: {
          type: String,
-         default: '--uknown-version--',
+         default: '0.3.0', // ideally, this prop should be handled by
+         // main.js, but I have yet to figure out how that works.
       }
    },
 }

@@ -81,11 +81,12 @@ export default {
         this.post_mcbkt_fit_consumer_hook ()
       return new_doc
     }
+    console.log ('this.mcbkt_fit_consumer = ' + this.mcbkt_fit_consumer)
     this.ll = new logdata_listener (
       window.iframePhone ? window.iframePhone : iframe_phone,
-      (logdata, callback) => { // eslint-disable-line no-unused-vars
-        // console.log ("== main.js: posting logdata for mcbkt analysis: "
-        //              + JSON.stringify (logdata))
+      (logdata, callback) => {
+        console.log ("== mcbkt_consumer_panel: posting logdata for mcbkt " +
+                     "analysis: " + JSON.stringify (logdata))
         post_logdata_for_mcbkt (logdata, this.ll.get_state (false))
         .then (
           data => {
@@ -116,5 +117,6 @@ export default {
         verbosity: 0
       }
     )
+    console.log ('this.ll = ' + this.ll)
   }
 }

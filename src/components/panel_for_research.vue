@@ -6,9 +6,11 @@
     <h2 class='curact'>Current {{ unit_activity_type | capitalize }}</h2>
     <map_table_h :data="curitems" :body_tooltip="body_tooltip_cur">
     </map_table_h>
-    <h2 class='preact'>Previous {{ unit_activity_type | capitalize | pluralize }}</h2>
+    <h2 class='preact'>
+      Previous {{ unit_activity_type | capitalize | pluralize }}</h2>
     <map_table_h :data="previtems"> </map_table_h>
-    <h2 class='allact'>All {{ unit_activity_type | capitalize | pluralize }}</h2>
+    <h2 class='allact'>All {{ unit_activity_type | capitalize | pluralize }}
+      </h2>
     <map_table_h :data="allitems"> </map_table_h>
   </div>
 </template>
@@ -32,8 +34,7 @@ export default {
   data () {
     return {
       width: 335,
-      height: 500,
-      _prev_cd: '',
+      height: 400,
     }
   },
   props: {
