@@ -1,6 +1,7 @@
-// This mixin manages data "all_data, ll, mcbkt_fit_consumer".
-// It uses data "width, height".
-// It also calls this.post_mcbkt_fit_consumer_hook, if defined.
+// This mixin
+// 1. manages data "all_data, ll, mcbkt_fit_consumer",
+// 2. uses props "width, height",
+// 3. and calls "this.post_mcbkt_fit_consumer_hook", if defined.
 
 import iframe_phone from '@/js-ext/iframe-phone.js'
 import logdata_listener from '@/js-ext/iframe-logdata-listener.js'
@@ -42,10 +43,24 @@ function summarize_mcbkt_result (rv, mcbkt_ans, callback) { // <<<
 // >>>
 
 export default {
+  props: {
+    width: {
+      type: Number,
+      default: 335,
+    },
+    height: {
+      type: Number,
+      default: 90,
+    },
+  },
+  data () {
+    return {
+      all_data: [], // important to declare for reactive-ness
+    }
+  },
   created: function () {
     this.all_data = []
     this.mcbkt_fit_consumer = data => {
-      // console.log ("== this.mcbkt_fit_consumer returning is called.")
       const norm_scores = data.norm_scores || []
       const times = data.times || []
       const cluster = data.cluster || ''
@@ -75,9 +90,8 @@ export default {
       const new_doc = {id, cluster, time, iscores, cluster_long, cluster_desc,
         npts}
       this.all_data = old_data.concat (new_doc)
-      if (this.post_mcbkt_fit_consumer_hook) // just in case
+      if (this.post_mcbkt_fit_consumer_hook) // just in case (?)
         this.post_mcbkt_fit_consumer_hook ()
-      // console.log ("== this.mcbkt_fit_consumer returning: " + new_doc)
       return new_doc
     }
     this.ll = new logdata_listener (

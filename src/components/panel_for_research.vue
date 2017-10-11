@@ -1,7 +1,8 @@
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
-    <p class="explain_cluster">{{ body_tooltip_cur_plus }}</p>
+    <p class="explain_cluster">{{ body_tooltip_cur_plus }}<br>
+    <span class=scores>{{ scores }}</span></p>
     <h1>{{ heading | capitalize_all }}</h1>
     <h2 class='curact'>Current {{ unit_activity_type | capitalize }}</h2>
     <map_table_h :data="curitems" :body_tooltip="body_tooltip_cur">
@@ -31,14 +32,11 @@ export default {
   components: {
     'map_table_h': MapTableH,
   },
-  data () {
-    return {
-      all_data: [], // important for reactive-ness
-      width: 335,
-      height: 400,
-    }
-  },
   props: {
+    height: {
+      type: Number,
+      default: 400,
+    },
     unit_activity_type: {
       default: 'level',
       type: String,
@@ -63,27 +61,32 @@ export default {
   computed: {
     body_tooltip_cur: {
       get: function () {
-        console.log ('== body_tooltip_cur: getter is called.')
-        const d = this.all_data
-        if (! d) return ''
-        if (d.length)
-          return d [d.length - 1].tooltip || ''
-        return ''
+        let d = this.all_data
+        if (! d || ! d.length) return ''
+        d = d [d.length - 1]
+        const prefix = d.cluster_long ? d.cluster_long : d.cluster
+        if (d.cluster_desc)
+          return prefix + ':' + d.cluster_desc
+        else
+          return prefix
       },
       set: function () {}
     },
     body_tooltip_cur_plus: {
       get: function () {
-        console.log ('== body_tooltip_cur_plus: getter is called.')
         const btc = this.body_tooltip_cur.trim ()
         if (! btc.length) return ''
-        if (btc.startsWith ('A') || btc.startsWith ('B') ||
-              btc.startsWith ('E'))
-          return 'Cluster ' + btc
-        else if (btc.startsWith ('C'))
-          return 'Cluster ' + btc
-        else
-          return 'Cluster ' + btc
+        return 'Cluster ' + btc
+      },
+      set: function () {}
+    },
+    scores: {
+      get: function () {
+        const d = this.all_data
+        if (! d || ! d.length) return ''
+        const ans = d [d.length - 1].iscores.join (',')
+        if (! ans.length) return ans
+        return 'Scores:' + ans
       },
       set: function () {}
     },

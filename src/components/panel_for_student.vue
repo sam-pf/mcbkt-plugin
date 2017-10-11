@@ -16,9 +16,6 @@ export default {
   mixins: [mcbkt_consumer_panel],
   data () {
     return {
-      all_data: [], // important for reactive-ness
-      width: 335,
-      height: 90,
       _prev_cd: '',
     }
   },
