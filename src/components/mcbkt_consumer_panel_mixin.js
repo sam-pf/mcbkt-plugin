@@ -7,6 +7,8 @@ import logdata_listener from '@/js-ext/iframe-logdata-listener.js'
 import post_logdata_for_mcbkt from '@/js-ext/mcbkt-client.js'
 
 function summarize_mcbkt_result (rv, mcbkt_ans, callback) { // <<<
+   console.log ("== summarize_mcbkt_result is called.")
+   console.log ("== rv = " + rv)
    const new_doc = rv || {}
    const sep = ';'
    let parts = [] // parts should not accept any sep containing string
@@ -42,6 +44,7 @@ function summarize_mcbkt_result (rv, mcbkt_ans, callback) { // <<<
 export default {
   data () {
     return {
+      all_data: [], // important for reactive-ness.
       width: 335,
       height: 90,
     }
@@ -49,6 +52,7 @@ export default {
   created: function () {
     this.all_data = []
     this.mcbkt_fit_consumer = data => {
+      console.log ("== this.mcbkt_fit_consumer returning is called.")
       const norm_scores = data.norm_scores || []
       const times = data.times || []
       const cluster = data.cluster || ''
@@ -79,20 +83,22 @@ export default {
       this.all_data = old_data.concat (new_doc)
       if (this.post_mcbkt_fit_consumer_hook) // just in case
         this.post_mcbkt_fit_consumer_hook ()
+      console.log ("== this.mcbkt_fit_consumer returning: " + new_doc)
       return new_doc
     }
     this.ll = new logdata_listener (
       window.iframePhone ? window.iframePhone : iframe_phone,
       (logdata, callback) => {
-        // console.log ("== mcbkt_consumer_panel: posting logdata for mcbkt " +
-        //              "analysis: " + JSON.stringify (logdata))
+        console.log ("== mcbkt_consumer_panel: posting logdata for mcbkt " +
+                     "analysis: " + JSON.stringify (logdata))
         post_logdata_for_mcbkt (logdata, this.ll.get_state (false))
         .then (
           data => {
-            // console.log ("== main.js: received data from UKDE: " +
-            //              data)
+            console.log ("== mcbkt_consumer_panel: received data from UKDE: " +
+                         data)
             let d = JSON.parse (data)
-            if (d.answer && this.mcbkt_fit_consumer)
+            console.log ("== d.answer = " + d.answer)
+            if (d.answer)
               summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
                 d.answer, callback)
           },
