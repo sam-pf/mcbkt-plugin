@@ -1,8 +1,10 @@
 <!-- <<< template block -->
 <template>
   <div class="mcbkt-panel">
-    <p class="explain_cluster">{{ body_tooltip_cur_plus }}<br>
-    <span class=scores>{{ scores }}</span></p>
+    <p class="score_string" v-if="score_string">
+      {{ score_string }}</p>
+    <p class="explain_cluster" v-if="body_tooltip_cur_plus">
+      {{ body_tooltip_cur_plus }}</p>
     <h1>{{ heading | capitalize_all }}</h1>
     <h2 class='curact'>Current {{ unit_activity_type | capitalize }}</h2>
     <map_table_h :data="curitems" :body_tooltip="body_tooltip_cur">
@@ -80,7 +82,7 @@ export default {
       },
       set: function () {}
     },
-    scores: {
+    score_string: {
       get: function () {
         const d = this.all_data
         if (! d || ! d.length) return ''
@@ -163,11 +165,21 @@ h1, h2 {
   padding-bottom: 0px;
 }
 
-.explain_cluster {
+.score_string, .explain_cluster {
   max-width: 330px;
   padding: 10px;
   background-color: #b4d497;
   font-size: 1.2em;
+  margin: 0px;
+}
+
+.score_string {
+  font-size: 1em;
+  margin-bottom: 0px;
+}
+
+.explain_cluster {
+  margin-top: 0px;
 }
 
 .curact {
