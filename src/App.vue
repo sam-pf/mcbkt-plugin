@@ -1,7 +1,7 @@
 <template>
-  <div id="app" :version="version">
+  <div id="app">
     <div id="app-innerframe">
-      <router-view @cd_changed="cd_changed_cb"></router-view>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -27,11 +27,6 @@ export default {
       version: {
          type: String,
          default: '--uknown-version--',
-      }
-   },
-   methods : {
-      cd_changed_cb: function (cd) {
-         this.ll.update_title ('rt-MCBKT-' +  cd)
       }
    },
 }

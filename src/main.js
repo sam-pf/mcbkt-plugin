@@ -26,7 +26,7 @@ new Vue ({
    router,
    template: '<App/>',
    components: { App },
-   data: {
+   propsData: {
      version : '0.3.0'
    }
 })

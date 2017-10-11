@@ -48,40 +48,6 @@ export default {
   },
   created: function () {
     this.all_data = []
-    this.ll = new logdata_listener (
-      window.iframePhone ? window.iframePhone : iframe_phone,
-      (logdata, callback) => { // eslint-disable-line no-unused-vars
-        // console.log ("== main.js: posting logdata for mcbkt analysis: "
-        //              + JSON.stringify (logdata))
-        post_logdata_for_mcbkt (logdata, this.ll.get_state (false))
-        .then (
-          data => {
-            // console.log ("== main.js: received data from UKDE: " +
-            //              data)
-            let d = JSON.parse (data)
-            if (d.answer && this.mcbkt_fit_consumer)
-              summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
-                d.answer, callback)
-          },
-          reason => { console.error ("** E: promise rejected.", reason) }
-        )
-        .catch (
-          error => {
-            console.error ("** E: error while processing promise.", error)
-          }
-        )
-      },
-      {
-       title: this.$parent.logdata_listener_name,
-       version: this.$parent.version,
-       dimensions: { width: this.width, height: this.height },
-       more_logdatum_fields: {
-         'application': this.$parent.application,
-         'activity': this.$parent.activity
-       },
-       block_boomerang: false,
-       verbosity: 0
-      })
     this.mcbkt_fit_consumer = data => {
       const norm_scores = data.norm_scores || []
       const times = data.times || []
@@ -115,5 +81,40 @@ export default {
         this.post_mcbkt_fit_consumer_hook ()
       return new_doc
     }
+    this.ll = new logdata_listener (
+      window.iframePhone ? window.iframePhone : iframe_phone,
+      (logdata, callback) => { // eslint-disable-line no-unused-vars
+        // console.log ("== main.js: posting logdata for mcbkt analysis: "
+        //              + JSON.stringify (logdata))
+        post_logdata_for_mcbkt (logdata, this.ll.get_state (false))
+        .then (
+          data => {
+            // console.log ("== main.js: received data from UKDE: " +
+            //              data)
+            let d = JSON.parse (data)
+            if (d.answer && this.mcbkt_fit_consumer)
+              summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
+                d.answer, callback)
+          },
+          reason => { console.error ("** E: promise rejected.", reason) }
+        )
+        .catch (
+          error => {
+            console.error ("** E: error while processing promise.", error)
+          }
+        )
+      },
+      {
+        title: this.$parent.logdata_listener_name,
+        version: this.$parent.version,
+        dimensions: { width: this.width, height: this.height },
+        more_logdatum_fields: {
+          'application': this.$parent.application,
+          'activity': this.$parent.activity
+        },
+        block_boomerang: false,
+        verbosity: 0
+      }
+    )
   }
 }

@@ -14,37 +14,13 @@ export default new Router ({
   mode: 'history',
   routes: [
     {
-      path: '/cdi/mcbkt-stg/research',
+      path: '(/cdi/mcbkt-stg|/cdi/mcbkt|)/research',
       name: 'panel_research',
       component: Panel_research,
       props: common_props,
     },
     {
-      path: '/cdi/mcbkt/research',
-      name: 'panel_research',
-      component: Panel_research,
-      props: common_props,
-    },
-    {
-      path: '/research',
-      name: 'panel_research',
-      component: Panel_research,
-      props: common_props,
-    },
-    {
-      path: '/cdi/mcbkt-stg/',
-      name: 'panel',
-      component: Panel,
-      props: common_props,
-    },
-    {
-      path: '/cdi/mcbkt/',
-      name: 'panel',
-      component: Panel,
-      props: common_props,
-    },
-    {
-      path: '/',
+      path: '(/cdi/mcbkt-stg|/cd/mcbkt|)/',
       name: 'panel',
       component: Panel,
       props: common_props,

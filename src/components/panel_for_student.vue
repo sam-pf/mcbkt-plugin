@@ -46,7 +46,7 @@ export default {
             rv = ('c' + this.curlevel + 'ca' + desc).toLowerCase ()
         }
         if (rv != this._prev_cd) {
-          this.$emit ('cd_changed', rv)
+          this.ll.update_title ('rt-MCBKT-' +  rv)
           this._prev_cd = rv
         }
         return rv
