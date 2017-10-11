@@ -33,6 +33,7 @@ export default {
   },
   data () {
     return {
+      all_data: [], // important for reactive-ness
       width: 335,
       height: 400,
     }
@@ -76,9 +77,9 @@ export default {
         if (! btc.length) return ''
         if (btc.startsWith ('A') || btc.startsWith ('B') ||
               btc.startsWith ('E'))
-          return 'GREAT! Cluster ' + btc
+          return 'Cluster ' + btc
         else if (btc.startsWith ('C'))
-          return 'Good! Cluster ' + btc
+          return 'Cluster ' + btc
         else
           return 'Cluster ' + btc
       },

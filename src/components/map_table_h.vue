@@ -26,7 +26,7 @@ export default {
       },
       validator: function (val) {
         if ( val [Symbol.iterator] == undefined ) {
-          console.log ('data must be an iterable.')
+          console.warn ('** map_table_h: data must be an iterable.')
           return false
         }
         // Detailed checkes on Set or Array data: deleted (unnecessary, I
