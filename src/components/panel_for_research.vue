@@ -68,7 +68,7 @@ export default {
         d = d [d.length - 1]
         const prefix = d.cluster_long ? d.cluster_long : d.cluster
         if (d.cluster_desc)
-          return prefix + ':' + d.cluster_desc
+          return prefix + ': ' + d.cluster_desc
         else
           return prefix
       },
@@ -88,7 +88,7 @@ export default {
         if (! d || ! d.length) return ''
         const ans = d [d.length - 1].iscores.join (',')
         if (! ans.length) return ans
-        return 'Scores:' + ans
+        return 'Scores: ' + ans
       },
       set: function () {}
     },
@@ -174,12 +174,12 @@ h1, h2 {
 }
 
 .score_string {
-  font-size: 1em;
   margin-bottom: 0px;
 }
 
 .explain_cluster {
   margin-top: 0px;
+  margin-bottom: 5px;
 }
 
 .curact {
