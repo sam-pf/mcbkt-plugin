@@ -63,6 +63,7 @@ export default {
   computed: {
     body_tooltip_cur: {
       get: function () {
+        console.log ('== body_tooltip_cur: getter is called.')
         const d = this.all_data
         if (! d) return ''
         if (d.length)
@@ -73,6 +74,7 @@ export default {
     },
     body_tooltip_cur_plus: {
       get: function () {
+        console.log ('== body_tooltip_cur_plus: getter is called.')
         const btc = this.body_tooltip_cur.trim ()
         if (! btc.length) return ''
         if (btc.startsWith ('A') || btc.startsWith ('B') ||

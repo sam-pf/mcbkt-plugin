@@ -42,13 +42,6 @@ function summarize_mcbkt_result (rv, mcbkt_ans, callback) { // <<<
 // >>>
 
 export default {
-  data () {
-    return {
-      all_data: [], // important for reactive-ness.
-      width: 335,
-      height: 90,
-    }
-  },
   created: function () {
     this.all_data = []
     this.mcbkt_fit_consumer = data => {
