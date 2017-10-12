@@ -44,6 +44,10 @@ function summarize_mcbkt_result (rv, mcbkt_ans, callback) { // <<<
 
 export default {
   props: {
+    application: { type: String },
+    activity: { type: String },
+    logdata_listener_name: { type: String },
+    version: { type: String },
     width: {
       type: Number,
       default: 335,
@@ -119,8 +123,8 @@ export default {
         )
       },
       {
-        title: this.$parent.logdata_listener_name,
-        version: this.$parent.version,
+        title: this.logdata_listener_name,
+        version: this.version,
         dimensions: { width: this.width, height: this.height },
         more_logdatum_fields: {
           'application': this.$parent.application,

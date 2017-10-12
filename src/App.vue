@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <div id="app-innerframe">
-      <router-view></router-view>
+      <router-view :activity="activity" :application="application"
+        :logdata_listener_name="logdata_listener_name"
+        :version="version">
+        </router-view>
     </div>
   </div>
 </template>
@@ -23,12 +26,15 @@ export default {
          type: String,
          default: 'Real Time MCBKT',
       },
-      version: {
-         type: String,
-         default: '0.3.0', // ideally, this prop should be handled by
-         // main.js, but I have yet to figure out how that works.
-      }
    },
+   computed: {
+     version: {
+       get: function () {
+         return this.$parent.version
+       },
+       set: function () {}
+     }
+   }
 }
 </script>
 
