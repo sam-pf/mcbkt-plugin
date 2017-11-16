@@ -13,3 +13,5 @@ _scr/
 *.ntvs*
 *.njsproj
 *.sln
+
+install.git.hooks
