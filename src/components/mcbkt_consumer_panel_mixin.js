@@ -76,6 +76,7 @@ export default {
           npts = norm_scores.length
       }
       // TODO: do a better job of timing?  3 is an estimated "play time"
+      //       Probably should just replace 3 with 1 (more rigorous).
       const time = npts? Math.round (times [npts - 1] - times [0] + 3) : ''
       const id = reffv_list.length? reffv_list [reffv_list.length - 1] : ''
       let prev_reffv_list = []
