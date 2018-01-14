@@ -21,7 +21,7 @@ export default new Router ({
       props: common_props,
     },
     {
-      path: '(/cdi/mcbkt-stg|/cd/mcbkt|)/',
+      path: '(/cdi/mcbkt-stg|/cdi/mcbkt|)/',
       name: 'panel',
       component: Panel,
       props: common_props,
