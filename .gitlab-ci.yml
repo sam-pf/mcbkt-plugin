@@ -5,7 +5,7 @@ stages:
 stg:
   type: build
   script:
-    - sudo ~gitlab-runner/scr/dispatch stg
+    - sudo ~gitlab-runner/scr/dispatch pro
   only:
     - master
 

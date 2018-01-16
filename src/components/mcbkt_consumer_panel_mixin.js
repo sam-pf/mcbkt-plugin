@@ -67,7 +67,7 @@ export default {
     this.mcbkt_fit_consumer = data => {
       const norm_scores = data.norm_scores || []
       const times = data.times || []
-      const cluster = data.cluster || ''
+      const cluster = data.cluster_short || ''
       const reffv_list = data.reffv_list || []
       let npts = times.length
       if (npts != norm_scores.length) {
@@ -82,7 +82,7 @@ export default {
       let prev_reffv_list = []
       for (const m of this.all_data)
         prev_reffv_list.push (m.id)
-      const cluster_long = data.cluster_long || ''
+      const cluster_long = data.cluster || ''
       const cluster_desc = data.cluster_description || ''
       let old_data
       if (reffv_list.join (',') === prev_reffv_list.join (','))
