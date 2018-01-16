@@ -102,15 +102,15 @@ export default {
     this.ll = new logdata_listener (
       window.iframePhone ? window.iframePhone : iframe_phone,
       (logdata, callback) => {
-        console.log ("== mcbkt_consumer_panel: posting logdata for mcbkt " +
-                     "analysis: " + JSON.stringify (logdata))
+        // console.log ("== mcbkt_consumer_panel: posting logdata for mcbkt " +
+        //             "analysis: " + JSON.stringify (logdata))
         post_logdata_for_mcbkt (logdata, this.ll.get_state (false))
         .then (
           data => {
-            console.log ("== mcbkt_consumer_panel: received data from " +
-                         "UKDE: " + data)
+            // console.log ("== mcbkt_consumer_panel: received data from " +
+            //             "UKDE: " + data)
             let d = JSON.parse (data)
-            console.log ("== d.answer = " + d.answer)
+            // console.log ("== d.answer = " + d.answer)
             if (d.answer)
               summarize_mcbkt_result (this.mcbkt_fit_consumer (d),
                 d.answer, callback)
