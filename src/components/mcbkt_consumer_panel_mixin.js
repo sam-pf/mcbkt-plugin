@@ -9,7 +9,7 @@ import post_logdata_for_mcbkt from '@/js-ext/mcbkt-client.js'
 
 function summarize_mcbkt_result (rv, mcbkt_ans, callback) { // <<<
    console.log ("== summarize_mcbkt_result is called.")
-   console.log ("== rv = " + rv)
+   // console.log ("== rv = " + JSON.stringify (rv))
    const new_doc = rv || {}
    const sep = ';'
    let parts = [] // parts should not accept any sep containing string
