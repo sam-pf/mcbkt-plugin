@@ -19,9 +19,9 @@ Note that there are a bunch of sample hook scripts in folder `../.git/hooks`.
 # My hooks
 
 These are hooks defined here with file names ending with `.my.hook`.  These
-hooks can be invoked with `git-run-my-hook`, which is a function that runs
+hooks can be invoked with `git--run-my-hook`, which is a function that runs
 these hooks in the base directory of this git repository
-(`git-this-repository-base`).  This behavior of running the hook script at
+(`git--this-repository-base`).  This behavior of running the hook script at
 the repository base is the same as git hooks.
 
 My hooks are automatically run through my script setups, such as bash alias.
