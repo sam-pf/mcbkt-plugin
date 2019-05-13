@@ -1,6 +1,14 @@
 #!/bin/bash
 
-make jsext lint
+! . ~/.bash_funcs && echo '** Critical error (bash_funcs).' >&2 && exit 1
+git--check-shorthostname-for-hook -e -s 3 "${0##*/}"
+
+set -e
+
+gecko -ljc -dr 'pre-add task: syncing in from meta/_meta'
+meta_folder=$(git--cd -n meta)
+"$meta_folder"/_meta/_sync-in --exclude /README.legal
 
 # the full make is disabled for now
+make jsext lint
 #make

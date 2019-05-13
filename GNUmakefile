@@ -1,5 +1,5 @@
-SHELL:=/bin/bash
-PATHREGEX:=(:|^)\./node_modules/\.bin(:|$$)
+SHELL := /bin/bash
+PATHREGEX := (:|^)\./node_modules/\.bin(:|$$)
 ifeq "$(shell [[ $$PATH =~ $(PATHREGEX) ]] && echo 'y' || echo 'n' )" "n"
 	export PATH:=./node_modules/.bin:$(PATH)
 endif
@@ -10,7 +10,7 @@ CONFIG_FILES:=$(wildcard config config/*)
 TARGET_REFFILE:=dist/stg/index.html
 TARGET_REFFILE_PRO:=dist/pro/index.html
 
-.PHONY: build dev pro pub buildpro jsext lint
+.PHONY: all clean test live again build dev pro pub buildpro jsext lint
 
 all: jsext lint build
 
