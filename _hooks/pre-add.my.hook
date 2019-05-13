@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ! . ~/.bash_funcs && echo '** Critical error (bash_funcs).' >&2 && exit 1
-git--check-shorthostname-for-hook -e -s 3 "${0##*/}"
+git--check-hostname-s-for-hook -e -s 3 "${0##*/}"
 
 set -e
 
