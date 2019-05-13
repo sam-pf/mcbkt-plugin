@@ -1,9 +1,8 @@
 #!/bin/bash
 
 ! . ~/.bash_funcs && echo '** Critical error (bash_funcs).' >&2 && exit 1
-git--check-hostname-s-for-hook -e -s 3 "${0##*/}"
-
 set -e
+git--check-hostname-s-for-hook -e -s 3 "${0##*/}"
 
 gecko -ljc -dr 'pre-add task: syncing in from meta/_meta'
 meta_folder=$(git--cd -n meta)
