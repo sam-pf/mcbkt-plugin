@@ -2,21 +2,25 @@
 
 # Git hooks
 
-The hook scripts defined here can be installed by running `install.git.hooks`
-(or `./install.git.hooks`).  The scripts are installed in `../.git/hooks` as
-symlinks.  Each script, if it has a correct name, will be run automatically
-after appropriate event is triggered.
+_Most_ git hooks defined in this folder are automatically run by git.  If a
+symlink of this folder is created in folder `.git`, then _all_ hooks will be
+run automatically.
 
-If the script name is not recognized, it won't be installed.
+This is thanks to a new (as of 07-07-2019) global git configuration setting
+`core.hooksPath`, whose value is set to the relative path name of this folder
+(`_hooks`).
 
-If a script is installed, and then deleted from this folder, then the script
-that had been installed in `../.git/hooks` won't be functional, as it will
-have become an orphan link.
+In contrast, it used to be that a script (`install.git.hooks`) was used to
+install git hook scripts from this folder to the default git hooks folder
+(`../.git/hooks`).  That script is now deprecated.
 
-For this reason, all orphan links, whose names do not contain dots, in
-`../.git/hooks` will be removed by `./install.git.hooks`.
-
-Note that there are a bunch of sample hook scripts in folder `../.git/hooks`.
+Note that the folder location where the git hooks are run is the root of the
+working tree in many common cases.  But this location changes to .git instead
+in some cases as per `githooks` doc (e.g., if the hook name is one the
+following: pre-receive, update, post-receive, post-update, push-to-checkout).
+It takes merely one action for this folder to be effective in those
+situations as well: a symlink of this folder can be created in the folder
+.git.
 
 # My hooks
 
@@ -25,7 +29,7 @@ These are hooks defined here with file names ending with `.my.hook`.
 These hooks can be invoked with `git--run-my-hook`, which is a function that
 runs these hooks in the base directory of this git repository
 (`git--this-repository-base`).  This behavior of running the hook script at
-the repository base is the same as git hooks.
+the repository base is the same as many git hooks.
 
 Some frequently used bash aliases for git related commands are designed to
 invoke `git--run-my-hook` automatically.
