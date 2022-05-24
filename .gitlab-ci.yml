@@ -3,14 +3,14 @@ stages:
   - deploy
 
 stg:
-  type: build
+  stage: build
   script:
     - sudo ~gitlab-runner/scr/dispatch stg
   only:
     - master
 
 pro:
-  type: deploy
+  stage: deploy
   script:
     - sudo ~gitlab-runner/scr/dispatch pro
   only:
