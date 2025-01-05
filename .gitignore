@@ -14,4 +14,6 @@ _scr/
 *.njsproj
 *.sln
 
+.fng.more
+
 install.git.hooks

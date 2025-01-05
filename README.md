@@ -1,5 +1,3 @@
-[![pipeline status](https://gitlab.physicsfront.home/Sam/mcbkt-plugin/badges/master/pipeline.svg)](https://gitlab.physicsfront.home/Sam/mcbkt-plugin/commits/master)
-
 # mcbkt-panel
 
 MCBKT plugin for activity such as Ramp Game
